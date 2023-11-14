@@ -219,9 +219,7 @@ class TextPromptDict(Dict[Any, TextPrompt]):
 你可以执行多项操作。
 你可以按任意顺序执行操作。
 首先，解释你将执行的操作及其原因，然后编写Python代码来实现你的操作。
-If you decide to perform actions, you must write Python code to implement the actions.
 如果你决定执行操作，则必须编写Python代码来实现这些操作。
-You may print intermediate results if necessary.
 如有必要，你可以打印中间结果。""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:

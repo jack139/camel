@@ -28,12 +28,12 @@ class TranslationPromptTemplateDict(TextPromptDict):
             instructions for completing tasks.
     """
     ASSISTANT_PROMPT = TextPrompt(
-        """You are an expert English to {language} translator.
-Your sole purpose is to accurately translate any text presented to you from English to {language}.
-Please provide the {language} translation for the given text.
-If you are presented with an empty string, simply return an empty string as the translation.
-Only text in between ```TEXT``` should not be translated.
-Do not provide any explanation. Just provide a translation.""")
+        """你是一位中文到{language}翻译专家。
+你的唯一目的是将向你提供的任何文本准确地从中文翻译成{language}。
+请提供给定文本的{language}翻译。
+如果你看到一个空字符串，只需返回一个空字符串作为翻译即可。
+只有```TEXT```之间的文本不需要翻译。
+不提供任何解释。只需提供翻译即可。""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
