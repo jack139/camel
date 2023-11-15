@@ -12,6 +12,7 @@
 sudo pip3.9 install "fschat[model_worker,webui]"
 sudo pip3.9 install pydantic==1.10.13
 sudo pip3.9 install colorama tenacity
+sudo pip3.9 install transformers_stream_generator # for Qwen-7B-Chat
 ```
 
 
@@ -27,6 +28,9 @@ python3.9 -m fastchat.serve.model_worker --model-path ./lm_model/Llama-2-7b-chat
 
 # Launch the RESTful API server
 python3.9 -m fastchat.serve.openai_api_server --host localhost --port 8000
+
+# Launch the Gradio web server
+python3.9 -m fastchat.serve.gradio_web_server
 ```
 
 

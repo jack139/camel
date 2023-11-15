@@ -93,5 +93,6 @@ if __name__ == "__main__":
     main(
         model_type=ModelType.LLAMA_2,
         model_path="../lm_model/Llama-2-7b-chat-hf",
+        #model_path="../lm_model/Qwen-7B-Chat",
         server_url="http://localhost:8000/v1",
     )
