@@ -51,7 +51,7 @@ def messages_to_prompt(messages: List[OpenAIMessage], model: ModelType) -> str:
             else:
                 ret += role
         return ret
-    elif model == ModelType.VICUNA or model == ModelType.VICUNA_16K:
+    elif model == ModelType.VICUNA or model == ModelType.VICUNA_16K or model == ModelType.QWEN:
         seps = [" ", "</s>"]
         role_map = {"user": "USER", "assistant": "ASSISTANT"}
 
@@ -116,6 +116,11 @@ class OpenSourceTokenCounter(BaseTokenCounter):
                 model should be located.
         """
 
+        if model_type == ModelType.QWEN:
+            trust_remote_code = True
+        else:
+            trust_remote_code = False
+
         # Use a fast Rust-based tokenizer if it is supported for a given model.
         # If a fast tokenizer is not available for a given model,
         # a normal Python-based tokenizer is returned instead.
@@ -124,11 +129,13 @@ class OpenSourceTokenCounter(BaseTokenCounter):
             tokenizer = AutoTokenizer.from_pretrained(
                 model_path,
                 use_fast=True,
+                trust_remote_code=trust_remote_code,
             )
         except TypeError:
             tokenizer = AutoTokenizer.from_pretrained(
                 model_path,
                 use_fast=False,
+                trust_remote_code=trust_remote_code,
             )
         except:
             raise ValueError(

@@ -20,7 +20,8 @@ from camel.utils import print_text_animated
 
 
 def main(model_type=None, model_path=" ", server_url=" ") -> None:
-    task_prompt = "Develop a quick sort program"
+    #task_prompt = "Develop a trading bot for the stock market"
+    task_prompt = "开发一个股票交易机器人"
 
     agent_kwargs = {
         role: dict(
@@ -35,9 +36,9 @@ def main(model_type=None, model_path=" ", server_url=" ") -> None:
     }
 
     role_play_session = RolePlaying(
-        assistant_role_name="Python Programmer",
+        assistant_role_name="Python程序员",
         assistant_agent_kwargs=agent_kwargs["assistant"],
-        user_role_name="Software engineer",
+        user_role_name="股票交易员",
         user_agent_kwargs=agent_kwargs["user"],
         task_prompt=task_prompt,
         with_task_specify=True,
@@ -93,9 +94,9 @@ if __name__ == "__main__":
     main(
         #model_type=ModelType.LLAMA_2,
         #model_path="../lm_model/Llama-2-7b-chat-hf",
-        #model_type=ModelType.QWEN,
-        #model_path="../lm_model/Qwen-7B-Chat",
-        model_type=ModelType.ZH_ALPACA_2,
-        model_path="../lm_model/chinese-alpaca-2-7b-hf",
+        model_type=ModelType.QWEN,
+        model_path="../lm_model/Qwen-7B-Chat",
+        #model_type=ModelType.ZH_ALPACA_2,
+        #model_path="../lm_model/chinese-alpaca-2-7b-hf",
         server_url="http://localhost:8000/v1",
     )
