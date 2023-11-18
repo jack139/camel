@@ -91,8 +91,11 @@ if __name__ == "__main__":
     # model type. For example, to use Vicuna, we can set:
     # model_path = "lmsys/vicuna-7b-v1.5"
     main(
-        model_type=ModelType.LLAMA_2,
-        model_path="../lm_model/Llama-2-7b-chat-hf",
+        #model_type=ModelType.LLAMA_2,
+        #model_path="../lm_model/Llama-2-7b-chat-hf",
+        #model_type=ModelType.QWEN,
         #model_path="../lm_model/Qwen-7B-Chat",
+        model_type=ModelType.ZH_ALPACA_2,
+        model_path="../lm_model/chinese-alpaca-2-7b-hf",
         server_url="http://localhost:8000/v1",
     )

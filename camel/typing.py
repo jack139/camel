@@ -120,9 +120,9 @@ class ModelType(Enum):
             return (self.value in model_name.lower()
                     or "llama2" in model_name.lower())
         elif self is ModelType.ZH_ALPACA_2:
-            return ("Chinese-Alpaca-2" in model_name.lower())
+            return ("chinese-alpaca-2" in model_name.lower())
         else:
-            return self.value in model_name.lower()
+            return self.value.lower() in model_name.lower()
 
 
 class TaskType(Enum):
