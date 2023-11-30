@@ -333,7 +333,9 @@ class RolePlaying:
                 self.critic = Human(**(critic_kwargs or {}))
             else:
                 critic_criteria = (critic_criteria
-                                   or "improving the task performance")
+                                   #or "improving the task performance"
+                                   or "提高任务绩效"
+                                  )
                 critic_msg_meta_dict = dict(critic_role=critic_role_name,
                                             criteria=critic_criteria,
                                             **sys_msg_meta_dicts[0])
