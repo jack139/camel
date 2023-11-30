@@ -21,7 +21,8 @@ from camel.utils import print_text_animated
 
 def main(model_type=None, chat_turn_limit=50, model_path=" ",
          server_url=" ") -> None:
-    task_prompt = "开发一个用于股票市场交易的交易机器人"
+    #task_prompt = "开发一个用于股票市场交易的交易机器人"
+    task_prompt = "Develop a trading bot for the stock market"
 
     agent_kwargs = {
         role: dict(
@@ -37,8 +38,10 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
 
     role_play_session = RolePlaying(
         assistant_role_name="Python程序员",
+        #assistant_role_name="Python Programmer",
         assistant_agent_kwargs=agent_kwargs["assistant"],
         user_role_name="股票交易员",
+        #user_role_name="Stock Trader",
         user_agent_kwargs=agent_kwargs["user"],
         task_prompt=task_prompt,
         with_task_specify=True,

@@ -13,6 +13,7 @@ sudo pip3.9 install "fschat[model_worker,webui]"
 sudo pip3.9 install pydantic==1.10.13
 sudo pip3.9 install colorama tenacity
 sudo pip3.9 install transformers_stream_generator # for Qwen-7B-Chat
+sudo pip3.9 install openai==1.2.4 # for camel
 ```
 
 
@@ -60,5 +61,5 @@ cp examples/open_source_models/role_playing_with_open_source_model.py .
 ### Run test
 
 ```bash
-OPENAI_API_KEY=EMPTY python3.9 role_playing_with_open_source_model.py
+OPENAI_API_KEY=EMPTY python3.9 test_zh.py
 ```

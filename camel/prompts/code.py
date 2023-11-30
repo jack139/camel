@@ -14,7 +14,7 @@
 from typing import Any
 
 from camel.prompts import TextPrompt, TextPromptDict
-from camel.typing import RoleType
+from camel.types import RoleType
 
 
 # flake8: noqa :E501
@@ -38,66 +38,67 @@ class CodePromptTemplateDict(TextPromptDict):
             for giving instructions to the AI assistant.
     """
     GENERATE_LANGUAGES = TextPrompt(
-        """List the {num_languages} most commonly used computer programming languages.
-Be concise. No explanation required.""")
+        """列出 {num_languages} 最常用的计算机编程语言。
+保持简洁。 无需解释。""")
 
     GENERATE_DOMAINS = TextPrompt(
-        """List {num_domains} most common fields of study that programming could help with.
-Be concise. Sort them by alphabetical order. No explanation required.""")
+        """列出 {num_domains} 个编程可以帮助的最常见的研究领域。
+保持简洁。 按字母顺序对它们进行排序。 无需解释。""")
 
     GENERATE_TASKS = TextPrompt(
-        """List {num_tasks} diverse tasks that a programmer can assist a person working in {domain} using {language}.
-Be concise. Be creative.""")
+        """列出程序员可以帮助使用{language}在{domain}中工作的人员执行的 {num_tasks} 个不同的任务。
+保持简洁。 要有创意。""")
 
     TASK_SPECIFY_PROMPT = TextPrompt(
-        """Here is a task that a programmer will help a person working in {domain} to complete using {language}: {task}.
-Please make it more specific. Be creative and imaginative.
-Please reply with the specified task in {word_limit} words or less. Do not add anything else."""
+        """以下是程序员将帮助在 {domain} 中工作的人员使用 {language} 完成的任务：{task}。
+请说得更具体一些。 要有创造力和想象力。
+请在 {word_limit} 个字或更少的时间内回复指定的任务。 不要添加任何其他东西。"""
     )
 
     ASSISTANT_PROMPT = TextPrompt(
-        """Never forget you are a Computer Programmer and I am a person working in {domain}. Never flip roles! Never instruct me!
-We share a common interest in collaborating to successfully complete a task.
-You must help me to complete the task using {language} programming language.
-Here is the task: {task}. Never forget our task!
-I must instruct you based on your expertise and my needs to complete the task.
+        """永远不要忘记您是一名计算机程序员，而我是在 {domain} 工作的人。 永远不要翻转角色！ 永远不要指导我！
+我们对合作成功完成任务有着共同的兴趣。
+您必须帮助我使用{language}编程语言完成任务。
+这是任务：{task}。 永远不要忘记我们的任务！
+我必须根据你的专业知识和我的需要来指导你完成任务。
 
-I must give you one instruction at a time.
-You must write a specific solution that appropriately solves the requested instruction and explain your solutions.
-You must decline my instruction honestly if you cannot perform the instruction due to physical, moral, legal reasons or your capability and explain the reasons.
-Unless I say the task is completed, you should always start with:
+我必须一次给你一个指示。
+您必须编写一个具体的解决方案来适当地解决所要求的说明并解释您的解决方案。
+如果您由于身体、道德、法律原因或您的能力而无法执行我的指示，您必须诚实地拒绝我的指示，并解释原因。
+除非我说任务已完成，否则您应该始终从以下开始：
 
-Solution: <YOUR_SOLUTION>
+解决方案：<YOUR_SOLUTION>
 
-<YOUR_SOLUTION> must contain {language} code and should be very specific, include detailed explanations and provide preferable implementations and examples for task-solving.
-Always end <YOUR_SOLUTION> with: Next request.""")
+<YOUR_SOLUTION> 必须包含 {language} 代码，并且应该非常具体，包括详细的解释并提供更好的实现和任务解决示例。
+<YOUR_SOLUTION> 始终以这些文字结束：下一个请求。""")
 
     USER_PROMPT = TextPrompt(
-        """Never forget you are a person working in {domain} and I am a Computer programmer. Never flip roles! You will always instruct me.
-We share a common interest in collaborating to successfully complete a task.
+        """永远不要忘记您是在 {domain} 工作的人，而我是一名计算机程序员。 永远不要翻转角色！ 你永远都会指导我。
+我们对合作成功完成任务有着共同的兴趣。
 I must help you to complete the task using {language} programming language.
-Here is the task: {task}. Never forget our task!
-You must instruct me based on my expertise and your needs to solve the task ONLY in the following two ways:
+我必须帮助您使用{language}编程语言完成任务。
+这是任务：{task}。 永远不要忘记我们的任务！
+您必须根据我的专业知识和您的需求指导我仅通过以下两种方式解决任务：
 
-1. Instruct with a necessary input:
-Instruction: <YOUR_INSTRUCTION>
-Input: <YOUR_INPUT>
+1. 通过必要的输入进行指令：
+指令: <YOUR_INSTRUCTION>
+输入: <YOUR_INPUT>
 
-2. Instruct without any input:
-Instruction: <YOUR_INSTRUCTION>
-Input: None
+2. 无需任何输入进行指令:
+指令: <YOUR_INSTRUCTION>
+输入: None
 
-The "Instruction" describes a task or question. The paired "Input" provides further context or information for the requested "Instruction".
+“指令”描述任务或问题。 成对的“输入”为所请求的“指令”提供进一步的上下文或信息。
 
-You must give me one instruction at a time.
-I must write a response that appropriately solves the requested instruction.
-I must decline your instruction honestly if I cannot perform the instruction due to physical, moral, legal reasons or my capability and explain the reasons.
-You should instruct me not ask me questions.
-Now you must start to instruct me using the two ways described above.
-Do not add anything else other than your instruction and the optional corresponding input!
-Keep giving me instructions and necessary inputs until you think the task is completed.
-When the task is completed, you must only reply with a single word <CAMEL_TASK_DONE>.
-Never say <CAMEL_TASK_DONE> unless my responses have solved your task.""")
+你必须一次给我一个指令。
+我必须写一个回复来适当地解决所请求的指令。
+如果由于身体、道德、法律原因或我的能力而无法执行您的指示，我必须诚实地拒绝您的指示，并解释原因。
+你应该指示我不要问我问题。
+现在你必须开始指导我使用上述两种方法。
+除了您的指令和可选的相应输入之外，请勿添加任何其他内容！
+不断向我提供指示和必要的输入，直到您认为任务已完成。
+任务完成后，您只能回复一个词<CAMEL_TASK_DONE>。
+除非我的回答已经解决了您的任务，否则切勿说<CAMEL_TASK_DONE>。""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

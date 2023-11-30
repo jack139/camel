@@ -15,7 +15,7 @@ import warnings
 from typing import Any, Optional
 
 from camel.prompts import TaskPromptTemplateDict, TextPrompt
-from camel.typing import RoleType, TaskType
+from camel.types import RoleType, TaskType
 
 
 class PromptTemplateGenerator:
@@ -80,7 +80,7 @@ class PromptTemplateGenerator:
             return self.get_prompt_from_key(task_type, role_type)
 
         except KeyError:
-            prompt = "You are a helpful assistant."
+            prompt = "你是一个有用的助手。"
 
             warnings.warn("Failed to get system prompt template for "
                           f"task: {task_type.value}, role: {role_type.value}. "
