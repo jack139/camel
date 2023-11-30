@@ -71,7 +71,8 @@ class TaskSpecifyAgent(ChatAgent):
             role_name="Task Specifier",
             role_type=RoleType.ASSISTANT,
             meta_dict=None,
-            content="You can make a task more specific.",
+            #content="You can make a task more specific.",
+            content="您可以使任务更加具体。",
         )
 
         super().__init__(system_message, model_type=model_type,

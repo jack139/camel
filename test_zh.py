@@ -21,8 +21,8 @@ from camel.utils import print_text_animated
 
 def main(model_type=None, chat_turn_limit=50, model_path=" ",
          server_url=" ") -> None:
-    #task_prompt = "开发一个用于股票市场交易的交易机器人"
-    task_prompt = "Develop a trading bot for the stock market"
+    task_prompt = "开发一个用于股票市场交易的交易机器人"
+    #task_prompt = "Develop a trading bot for the stock market"
 
     agent_kwargs = {
         role: dict(
@@ -83,7 +83,8 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
         print_text_animated(Fore.GREEN + "AI Assistant:\n\n"
                             f"{assistant_response.msg.content}\n")
 
-        if "CAMEL_TASK_DONE" in user_response.msg.content:
+        #if "CAMEL_TASK_DONE" in user_response.msg.content:
+        if "任务完成" in user_response.msg.content:
             break
 
         input_assistant_msg = assistant_response.msg

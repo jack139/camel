@@ -112,6 +112,9 @@ class OpenSourceModel(BaseModelBackend):
             model=self.model_name,
             **self.model_config_dict,
         )
+        # for debug
+        #print("-->", messages) 
+        #print("<--", response)
         return response
 
     def check_model_config(self):

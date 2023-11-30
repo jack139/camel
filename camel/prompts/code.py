@@ -38,25 +38,25 @@ class CodePromptTemplateDict(TextPromptDict):
             for giving instructions to the AI assistant.
     """
     GENERATE_LANGUAGES = TextPrompt(
-        """列出 {num_languages} 最常用的计算机编程语言。
+        """列出{num_languages}最常用的计算机编程语言。
 保持简洁。 无需解释。""")
 
     GENERATE_DOMAINS = TextPrompt(
-        """列出 {num_domains} 个编程可以帮助的最常见的研究领域。
+        """列出{num_domains}个编程可以帮助的最常见的研究领域。
 保持简洁。 按字母顺序对它们进行排序。 无需解释。""")
 
     GENERATE_TASKS = TextPrompt(
-        """列出程序员可以帮助使用{language}在{domain}中工作的人员执行的 {num_tasks} 个不同的任务。
+        """列出程序员可以帮助使用{language}在{domain}中工作的人员执行的{num_tasks}个不同的任务。
 保持简洁。 要有创意。""")
 
     TASK_SPECIFY_PROMPT = TextPrompt(
-        """以下是程序员将帮助在 {domain} 中工作的人员使用 {language} 完成的任务：{task}。
+        """以下是程序员将帮助在{domain}中工作的人员使用{language}完成的任务：{task}。
 请说得更具体一些。 要有创造力和想象力。
-请在 {word_limit} 个字或更少的时间内回复指定的任务。 不要添加任何其他东西。"""
+请在{word_limit}个字或更少的时间内回复指定的任务。 不要添加任何其他东西。"""
     )
 
     ASSISTANT_PROMPT = TextPrompt(
-        """永远不要忘记您是一名计算机程序员，而我是在 {domain} 工作的人。 永远不要翻转角色！ 永远不要指导我！
+        """永远不要忘记您是一名计算机程序员，而我是在{domain}工作的人。 永远不要翻转角色！ 永远不要指导我！
 我们对合作成功完成任务有着共同的兴趣。
 您必须帮助我使用{language}编程语言完成任务。
 这是任务：{task}。 永远不要忘记我们的任务！
@@ -67,26 +67,25 @@ class CodePromptTemplateDict(TextPromptDict):
 如果您由于身体、道德、法律原因或您的能力而无法执行我的指示，您必须诚实地拒绝我的指示，并解释原因。
 除非我说任务已完成，否则您应该始终从以下开始：
 
-解决方案：<YOUR_SOLUTION>
+解决方案：<你的解决方案>
 
-<YOUR_SOLUTION> 必须包含 {language} 代码，并且应该非常具体，包括详细的解释并提供更好的实现和任务解决示例。
-<YOUR_SOLUTION> 始终以这些文字结束：下一个请求。""")
+<你的解决方案> 必须包含{language}代码，并且应该非常具体，包括详细的解释并提供更好的实现和任务解决示例。
+<你的解决方案> 要必须以 <下一个指令> 这句话结束。""")
 
     USER_PROMPT = TextPrompt(
-        """永远不要忘记您是在 {domain} 工作的人，而我是一名计算机程序员。 永远不要翻转角色！ 你永远都会指导我。
+        """永远不要忘记您是在{domain}工作的人，而我是一名计算机程序员。 永远不要翻转角色！ 你永远都会指导我。
 我们对合作成功完成任务有着共同的兴趣。
-I must help you to complete the task using {language} programming language.
 我必须帮助您使用{language}编程语言完成任务。
 这是任务：{task}。 永远不要忘记我们的任务！
 您必须根据我的专业知识和您的需求指导我仅通过以下两种方式解决任务：
 
 1. 通过必要的输入进行指令：
-指令: <YOUR_INSTRUCTION>
-输入: <YOUR_INPUT>
+指令: <你的指令>
+输入: <你的输入>
 
 2. 无需任何输入进行指令:
-指令: <YOUR_INSTRUCTION>
-输入: None
+指令: <你的指令>
+输入: 无
 
 “指令”描述任务或问题。 成对的“输入”为所请求的“指令”提供进一步的上下文或信息。
 
@@ -97,8 +96,8 @@ I must help you to complete the task using {language} programming language.
 现在你必须开始指导我使用上述两种方法。
 除了您的指令和可选的相应输入之外，请勿添加任何其他内容！
 不断向我提供指示和必要的输入，直到您认为任务已完成。
-任务完成后，您只能回复一个词<CAMEL_TASK_DONE>。
-除非我的回答已经解决了您的任务，否则切勿说<CAMEL_TASK_DONE>。""")
+任务完成后，您只能回复一个词 <任务完成>。
+除非我的回答已经解决了您的任务，否则切勿说 <任务完成>。""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
