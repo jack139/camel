@@ -14,7 +14,7 @@
 from typing import Any
 
 from camel.prompts import TextPrompt, TextPromptDict
-from camel.types import RoleType
+from camel.typing import RoleType
 
 
 # flake8: noqa
@@ -28,14 +28,14 @@ class SolutionExtractionPromptTemplateDict(TextPromptDict):
             instructions for completing tasks.
     """
     ASSISTANT_PROMPT = TextPrompt(
-        """You are an experienced solution extracting agent. 
-Your task is to extract full and complete solutions by looking at the conversation between a user and an assistant with particular specializations. 
-You should present me with a final and detailed solution purely based on the conversation. 
-You should present the solution as if its yours. 
-Use present tense and as if you are the one presenting the solution. 
-You should not miss any necessary details or examples.
-Keep all provided explanations and codes provided throughout the conversation. 
-Remember your task is not to summarize rather to extract the full solution.""")
+        """你是一位经验丰富的提取解决方案的智能体。
+你的任务是通过查看用户和具有特定专业知识的助理之间的对话来提取全部且完整的解决方案。
+你应该纯粹根据谈话内容向我提供一个最终的、详细的解决方案。
+你应该将解决方案呈现为你的解决方案。
+使用现在时，就好像你是提出解决方案的人一样。
+你不应错过任何必要的细节或示例。
+保留整个对话过程中提供的所有解释和代码。
+请记住，你的任务不是总结，而是提取完整的解决方案。""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

@@ -14,18 +14,19 @@
 from typing import Any
 
 from camel.prompts import TextPrompt, TextPromptDict
-from camel.typing import RoleType
+from camel.types import RoleType
 
 
 # flake8: noqa :E501
-class CodePromptTemplateDict(TextPromptDict):
-    r"""A dictionary containing :obj:`TextPrompt` used in the `Code` task.
+class AISocietyPromptTemplateDict(TextPromptDict):
+    r"""A dictionary containing :obj:`TextPrompt` used in the `AI Society`
+    task.
 
     Attributes:
-        GENERATE_LANGUAGES (TextPrompt): A prompt to list different computer
-            programming languages.
-        GENERATE_DOMAINS (TextPrompt): A prompt to list common fields of study
-            that programming could help with.
+        GENERATE_ASSISTANTS (TextPrompt): A prompt to list different roles
+            that the AI assistant can play.
+        GENERATE_USERS (TextPrompt): A prompt to list common groups of
+            internet users or occupations.
         GENERATE_TASKS (TextPrompt): A prompt to list diverse tasks that
             the AI assistant can assist AI user with.
         TASK_SPECIFY_PROMPT (TextPrompt): A prompt to specify a task in more
@@ -37,28 +38,30 @@ class CodePromptTemplateDict(TextPromptDict):
             outlines the rules of the conversation and provides instructions
             for giving instructions to the AI assistant.
     """
-    GENERATE_LANGUAGES = TextPrompt(
-        """List the {num_languages} most commonly used computer programming languages.
-Be concise. No explanation required.""")
+    GENERATE_ASSISTANTS = TextPrompt(
+        """You are a helpful assistant that can play many different roles.
+Now please list {num_roles} different roles that you can play with your expertise in diverse fields.
+Sort them by alphabetical order. No explanation required.""")
 
-    GENERATE_DOMAINS = TextPrompt(
-        """List {num_domains} most common fields of study that programming could help with.
-Be concise. Sort them by alphabetical order. No explanation required.""")
+    GENERATE_USERS = TextPrompt(
+        """Please list {num_roles} most common and diverse groups of internet users or occupations.
+Use singular form. No explanation.
+Sort them by alphabetical order. No explanation required.""")
 
     GENERATE_TASKS = TextPrompt(
-        """List {num_tasks} diverse tasks that a programmer can assist a person working in {domain} using {language}.
+        """List {num_tasks} diverse tasks that {assistant_role} can assist {user_role} cooperatively to achieve together.
 Be concise. Be creative.""")
 
     TASK_SPECIFY_PROMPT = TextPrompt(
-        """Here is a task that a programmer will help a person working in {domain} to complete using {language}: {task}.
+        """Here is a task that {assistant_role} will help {user_role} to complete: {task}.
 Please make it more specific. Be creative and imaginative.
 Please reply with the specified task in {word_limit} words or less. Do not add anything else."""
     )
 
-    ASSISTANT_PROMPT = TextPrompt(
-        """Never forget you are a Computer Programmer and I am a person working in {domain}. Never flip roles! Never instruct me!
+    ASSISTANT_PROMPT: TextPrompt = TextPrompt("""===== RULES OF ASSISTANT =====
+Never forget you are a {assistant_role} and I am a {user_role}. Never flip roles! Never instruct me!
 We share a common interest in collaborating to successfully complete a task.
-You must help me to complete the task using {language} programming language.
+You must help me to complete the task.
 Here is the task: {task}. Never forget our task!
 I must instruct you based on your expertise and my needs to complete the task.
 
@@ -69,13 +72,13 @@ Unless I say the task is completed, you should always start with:
 
 Solution: <YOUR_SOLUTION>
 
-<YOUR_SOLUTION> must contain {language} code and should be very specific, include detailed explanations and provide preferable implementations and examples for task-solving.
+<YOUR_SOLUTION> should be very specific, include detailed explanations and provide preferable detailed implementations and examples and lists for task-solving.
 Always end <YOUR_SOLUTION> with: Next request.""")
 
-    USER_PROMPT = TextPrompt(
-        """Never forget you are a person working in {domain} and I am a Computer programmer. Never flip roles! You will always instruct me.
+    USER_PROMPT: TextPrompt = TextPrompt("""===== RULES OF USER =====
+Never forget you are a {user_role} and I am a {assistant_role}. Never flip roles! You will always instruct me.
 We share a common interest in collaborating to successfully complete a task.
-I must help you to complete the task using {language} programming language.
+I must help you to complete the task.
 Here is the task: {task}. Never forget our task!
 You must instruct me based on my expertise and your needs to solve the task ONLY in the following two ways:
 
@@ -99,13 +102,20 @@ Keep giving me instructions and necessary inputs until you think the task is com
 When the task is completed, you must only reply with a single word <CAMEL_TASK_DONE>.
 Never say <CAMEL_TASK_DONE> unless my responses have solved your task.""")
 
+    CRITIC_PROMPT = TextPrompt(
+        """You are a {critic_role} who teams up with a {user_role} and a {assistant_role} to solve a task: {task}.
+Your job is to select an option from their proposals and provides your explanations.
+Your selection criteria are {criteria}.
+You always have to choose an option from the proposals.""")
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.update({
-            "generate_languages": self.GENERATE_LANGUAGES,
-            "generate_domains": self.GENERATE_DOMAINS,
+            "generate_assistants": self.GENERATE_ASSISTANTS,
+            "generate_users": self.GENERATE_USERS,
             "generate_tasks": self.GENERATE_TASKS,
             "task_specify_prompt": self.TASK_SPECIFY_PROMPT,
             RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
             RoleType.USER: self.USER_PROMPT,
+            RoleType.CRITIC: self.CRITIC_PROMPT,
         })

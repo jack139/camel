@@ -14,7 +14,7 @@
 from typing import Any
 
 from camel.prompts import AISocietyPromptTemplateDict, TextPrompt
-from camel.typing import RoleType
+from camel.types import RoleType
 
 
 # flake8: noqa :E501
@@ -32,10 +32,10 @@ class RoleDescriptionPromptTemplateDict(AISocietyPromptTemplateDict):
             outlines the rules of the conversation and provides instructions
             for giving instructions to the AI assistant.
     """
-    ROLE_DESCRIPTION_PROMPT = TextPrompt("""===== 角色及其描述 =====
-{user_role}和{assistant_role}正在协作完成任务：{task}。
-{user_role}用来完成任务的能力、特征、职责和工作流程：{user_description}
-{assistant_role}的能力、特征、职责和完成任务的工作流程：{assistant_description}
+    ROLE_DESCRIPTION_PROMPT = TextPrompt("""===== ROLES WITH DESCRIPTION =====
+{user_role} and {assistant_role} are collaborating to complete a task: {task}.
+Competencies, characteristics, duties and workflows of {user_role} to complete the task: {user_description}
+{assistant_role}'s competencies, characteristics, duties and workflows to complete the task: {assistant_description}
 """)
 
     ASSISTANT_PROMPT = TextPrompt(ROLE_DESCRIPTION_PROMPT +

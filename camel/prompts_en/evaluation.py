@@ -14,29 +14,27 @@
 from typing import Any
 
 from camel.prompts import TextPrompt, TextPromptDict
-from camel.typing import RoleType
 
 
-# flake8: noqa :E501
-class TranslationPromptTemplateDict(TextPromptDict):
-    r"""A dictionary containing :obj:`TextPrompt` used in the `Translation`
+class EvaluationPromptTemplateDict(TextPromptDict):
+    r"""A dictionary containing :obj:`TextPrompt` used in the `Evaluation`
     task.
 
     Attributes:
-        ASSISTANT_PROMPT (TextPrompt): A system prompt for the AI assistant
-            that outlines the rules of the conversation and provides
-            instructions for completing tasks.
+        GENERATE_QUESTIONS (TextPrompt): A prompt to generate a set of
+            questions to be used for evaluating emergence of knowledge based
+            on a particular field of knowledge.
     """
-    ASSISTANT_PROMPT = TextPrompt(
-        """你是一位中文到{language}翻译专家。
-你的唯一目的是将向你提供的任何文本准确地从中文翻译成{language}。
-请提供给定文本的{language}翻译。
-如果你看到一个空字符串，只需返回一个空字符串作为翻译即可。
-只有```TEXT```之间的文本不需要翻译。
-不提供任何解释。只需提供翻译即可。""")
+
+    GENERATE_QUESTIONS = TextPrompt(
+        """Generate {num_questions} {category} diverse questions.
+Here are some example questions:
+{examples}
+
+Now generate {num_questions} questions of your own. Be creative""")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.update({
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+            "generate_questions": self.GENERATE_QUESTIONS,
         })
