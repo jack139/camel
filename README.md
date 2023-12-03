@@ -1,3 +1,13 @@
+## CAMEL with Chinese LLM
+
+这是对原版camel的一点修改：
+    1. 后端 LLM 适配 QWen-7B-chat
+    2. 框架内置的提示语改为中文，agent交互过程全部使用中文
+
+运行方法可以参考 TEST_zh.md
+
+
+
 <div style="left">
   <a href="https://colab.research.google.com/drive/1AzP33O8rnMW__7ocWJhVBXjKziJXPtim?usp=sharing" target="_blank">
     <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" />
