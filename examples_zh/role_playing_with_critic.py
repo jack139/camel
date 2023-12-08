@@ -21,8 +21,8 @@ from camel.utils import print_text_animated
 
 def main(model_type=None, chat_turn_limit=50, model_path=" ",
          server_url=" ") -> None:
-    task_prompt = "开发一个用于股票市场交易的交易机器人"
-    #task_prompt = "Develop a trading bot for the stock market"
+    task_prompt = "撰写一个大规模语言模型的研究计划"
+    #task_prompt = "Write a research proposal for large-scale language models"
 
     agent_kwargs = {
         role: dict(
@@ -35,17 +35,22 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
         )
         for role in ["assistant", "user", "task-specify"]
     }
+    critic_kwargs = dict(verbose=True)
 
     role_play_session = RolePlaying(
-        assistant_role_name="Python程序员",
-        #assistant_role_name="Python Programmer",
-        assistant_agent_kwargs=agent_kwargs["assistant"],
-        user_role_name="股票交易员",
-        #user_role_name="Stock Trader",
-        user_agent_kwargs=agent_kwargs["user"],
+        assistant_role_name="博士研究生",
+        #assistant_role_name="PhD Student",
+        user_role_name="博士后研究员",
+        #user_role_name="Postdoc",
+        critic_role_name="教授",
+        #critic_role_name="Professor",
         task_prompt=task_prompt,
         with_task_specify=True,
-        task_specify_agent_kwargs=agent_kwargs["task-specify"],
+        with_critic_in_the_loop=True,
+        assistant_agent_kwargs=agent_kwargs["assistant"],
+        user_agent_kwargs=agent_kwargs["user"],
+        #task_specify_agent_kwargs=agent_kwargs["task-specify"],
+        critic_kwargs=critic_kwargs,
     )
 
     print(
@@ -53,6 +58,8 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
         f"AI Assistant sys message:\n{role_play_session.assistant_sys_msg}\n")
     print(Fore.BLUE +
           f"AI User sys message:\n{role_play_session.user_sys_msg}\n")
+    print(Fore.MAGENTA +
+          f"Critic sys message:\n{role_play_session.critic_sys_msg}\n")
 
     print(Fore.YELLOW + f"Original task prompt:\n{task_prompt}\n")
     print(
@@ -83,7 +90,6 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
         print_text_animated(Fore.GREEN + "AI Assistant:\n\n"
                             f"{assistant_response.msg.content}\n")
 
-        #if "CAMEL_TASK_DONE" in user_response.msg.content:
         if "任务完成" in user_response.msg.content:
             break
 
