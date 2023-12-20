@@ -22,7 +22,6 @@ from camel.utils import print_text_animated
 def main(model_type=None, chat_turn_limit=50, model_path=" ",
          server_url=" ") -> None:
     task_prompt = "开发一个用于股票市场交易的交易机器人"
-    #task_prompt = "Develop a trading bot for the stock market"
 
     agent_kwargs = {
         role: dict(
@@ -30,7 +29,7 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
             model_config=OpenSourceConfig(
                 model_path=model_path,
                 server_url=server_url,
-                api_params=ChatGPTConfig(temperature=0),
+                api_params=ChatGPTConfig(temperature=0.5, frequency_penalty=0.3),
             ),
         )
         for role in ["assistant", "user", "task-specify"]
@@ -38,10 +37,8 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
 
     role_play_session = RolePlaying(
         assistant_role_name="Python程序员",
-        #assistant_role_name="Python Programmer",
         assistant_agent_kwargs=agent_kwargs["assistant"],
         user_role_name="股票交易员",
-        #user_role_name="Stock Trader",
         user_agent_kwargs=agent_kwargs["user"],
         task_prompt=task_prompt,
         with_task_specify=True,
@@ -97,9 +94,14 @@ if __name__ == "__main__":
     main(
         #model_type=ModelType.LLAMA_2,
         #model_path="../lm_model/Llama-2-7b-chat-hf",
+
         model_type=ModelType.QWEN,
         model_path="../lm_model/Qwen-7B-Chat",
+        #model_path="../lm_model/Qwen-14B-Chat",
+        #model_path="../lm_model/Qwen-1_8B-Chat",
+
         #model_type=ModelType.ZH_ALPACA_2,
         #model_path="../lm_model/chinese-alpaca-2-7b-hf",
+
         server_url="http://localhost:8000/v1",
     )

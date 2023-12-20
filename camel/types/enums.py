@@ -38,7 +38,7 @@ class ModelType(Enum):
     VICUNA_16K = "vicuna-16k"
 
     ZH_ALPACA_2 = "Chinese-Alpaca-2-7B"
-    QWEN = "Qwen-7B"
+    QWEN = "Qwen"
 
     @property
     def value_for_tiktoken(self) -> str:

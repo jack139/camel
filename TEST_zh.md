@@ -57,7 +57,7 @@ python3.9 -m fastchat.serve.gradio_web_server
 ### 运行测试
 
 ```bash
-OPENAI_API_KEY=EMPTY python3.9 test_zh.py
+OPENAI_API_KEY=EMPTY python3.9 -m examples_zh.role_playing
 ```
 
 

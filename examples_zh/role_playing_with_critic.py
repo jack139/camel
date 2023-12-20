@@ -22,7 +22,6 @@ from camel.utils import print_text_animated
 def main(model_type=None, chat_turn_limit=50, model_path=" ",
          server_url=" ") -> None:
     task_prompt = "撰写一个大规模语言模型的研究计划"
-    #task_prompt = "Write a research proposal for large-scale language models"
 
     agent_kwargs = {
         role: dict(
@@ -30,27 +29,26 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
             model_config=OpenSourceConfig(
                 model_path=model_path,
                 server_url=server_url,
-                api_params=ChatGPTConfig(temperature=0),
+                api_params=ChatGPTConfig(temperature=0.8, frequency_penalty=0.3, 
+                    n=3 if role in ["assistant", "user"] else 1
+                ), 
             ),
         )
-        for role in ["assistant", "user", "task-specify"]
+        for role in ["assistant", "user", "task-specify", "critic"]
     }
-    critic_kwargs = dict(verbose=True)
+    agent_kwargs["critic"]["verbose"] = True
 
     role_play_session = RolePlaying(
         assistant_role_name="博士研究生",
-        #assistant_role_name="PhD Student",
         user_role_name="博士后研究员",
-        #user_role_name="Postdoc",
         critic_role_name="教授",
-        #critic_role_name="Professor",
         task_prompt=task_prompt,
         with_task_specify=True,
         with_critic_in_the_loop=True,
         assistant_agent_kwargs=agent_kwargs["assistant"],
         user_agent_kwargs=agent_kwargs["user"],
-        #task_specify_agent_kwargs=agent_kwargs["task-specify"],
-        critic_kwargs=critic_kwargs,
+        critic_kwargs=agent_kwargs["critic"],
+        task_specify_agent_kwargs=agent_kwargs["task-specify"],
     )
 
     print(
@@ -102,11 +100,7 @@ if __name__ == "__main__":
     # model type. For example, to use Vicuna, we can set:
     # model_path = "lmsys/vicuna-7b-v1.5"
     main(
-        #model_type=ModelType.LLAMA_2,
-        #model_path="../lm_model/Llama-2-7b-chat-hf",
         model_type=ModelType.QWEN,
         model_path="../lm_model/Qwen-7B-Chat",
-        #model_type=ModelType.ZH_ALPACA_2,
-        #model_path="../lm_model/chinese-alpaca-2-7b-hf",
         server_url="http://localhost:8000/v1",
     )

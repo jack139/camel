@@ -75,15 +75,15 @@ class CriticAgent(ChatAgent):
         """
         options = [message.content for message in messages]
         flatten_options = (
-            f"> Proposals from "
-            f"{messages[0].role_name} ({messages[0].role_type}). "
-            "Please choose an option:\n")
+            f"> 来自 "
+            f"{messages[0].role_name} ({messages[0].role_type}) 的建议。 "
+            "请选择一个选项：\n")
         for index, option in enumerate(options):
-            flatten_options += f"Option {index + 1}:\n{option}\n\n"
+            flatten_options += f"建议 {index + 1}:\n{option}\n\n"
             self.options_dict[str(index + 1)] = option
         format = (
-            f"Please first enter your choice ([1-{len(self.options_dict)}]) "
-            "and then your explanation and comparison: ")
+            f"请先输入你的选择 ([1-{len(self.options_dict)}]) "
+            "然后说明你的解释和比较： ")
         return flatten_options + format
 
     def get_option(self, input_message: BaseMessage) -> str:
@@ -110,7 +110,7 @@ class CriticAgent(ChatAgent):
             critic_msg = critic_response.msg
             self.record_message(critic_msg)
             if self.verbose:
-                print_text_animated(self.logger_color + "\n> Critic response: "
+                print_text_animated(self.logger_color + "\n> 评论家的回应： "
                                     f"\x1b[3m{critic_msg.content}\x1b[0m\n")
             choice = self.parse_critic(critic_msg)
 
@@ -121,7 +121,7 @@ class CriticAgent(ChatAgent):
                     role_name=input_message.role_name,
                     role_type=input_message.role_type,
                     meta_dict=input_message.meta_dict,
-                    content="> Invalid choice. Please choose again.\n" +
+                    content="> 无效选择。 请再次选择。\n" +
                     msg_content,
                 )
                 i += 1
