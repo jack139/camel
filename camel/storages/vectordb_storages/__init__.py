@@ -12,10 +12,20 @@
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 
-from .base import BaseContextCreator
-from .score_based import ScoreBasedContextCreator
+from .base import (
+    BaseVectorStorage,
+    VectorRecord,
+    VectorDBQuery,
+    VectorDBQueryResult,
+    VectorDistance,
+)
+from .qdrant import QdrantStorage
 
 __all__ = [
-    'BaseContextCreator',
-    'ScoreBasedContextCreator',
+    'BaseVectorStorage',
+    'VectorDBQuery',
+    'VectorDBQueryResult',
+    'VectorDistance',
+    'QdrantStorage',
+    'VectorRecord',
 ]

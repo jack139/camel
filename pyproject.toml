@@ -34,6 +34,8 @@ tiktoken = "^0"
 colorama = "^0"
 jsonschema = "^4"
 protobuf = "^4"
+pathlib = "^1.0.1"   
+qdrant-client = "^1.6.4"
 
 transformers = { version = "^4", optional = true }
 diffusers = { version = "^0", optional = true }
@@ -173,5 +175,6 @@ module = [
     "fitz",
     "unstructured.*",
     "argilla.*",
+    "qdrant_client.*"
 ]
 ignore_missing_imports = true
