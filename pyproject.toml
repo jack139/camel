@@ -51,7 +51,6 @@ PyMuPDF = { version = "^1.22.5", optional = true }
 wikipedia = { version = "^1", optional = true }
 pyowm = { version = "^3.3.0", optional = true }
 unstructured = { version = "^0.10.30", optional = true }
-argilla = { version = "^1.19.0", optional = true }
 pytest = { version = "^7", optional = true}
 mock = { version = "^5", optional = true}
 
@@ -76,7 +75,6 @@ tools = [
     "wikipedia",
     "pyowm",
     "unstructured",
-    "argilla",
 ]
 
 all = [
@@ -94,7 +92,6 @@ all = [
     "wikipedia",
     "pyowm",
     "unstructured",
-    "argilla",
 ]
 
 [tool.poetry.group.dev]
