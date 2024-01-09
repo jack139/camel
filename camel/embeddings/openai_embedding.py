@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
-from typing import Any, List
+from typing import Any, List, Optional
 
 from openai import OpenAI
 
@@ -33,13 +33,22 @@ class OpenAIEmbedding(BaseEmbedding[str]):
 
     def __init__(
         self,
-        model_type: EmbeddingModelType = EmbeddingModelType.ADA_2,
+        model_type: EmbeddingModelType = EmbeddingModelType.QWEN_7B,
+        server_url: Optional[str] = None,
     ) -> None:
         if not model_type.is_openai:
             raise ValueError("Invalid OpenAI embedding model type.")
         self.model_type = model_type
         self.output_dim = model_type.output_dim
-        self.client = OpenAI()
+        if server_url is None:
+            self.client = OpenAI()
+        else:
+            self.client = OpenAI(
+                base_url=server_url,
+                timeout=60,
+                max_retries=3,
+            )
+
 
     @openai_api_key_required
     def embed_list(

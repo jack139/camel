@@ -14,6 +14,9 @@ sudo pip3.9 install pydantic==1.10.13
 sudo pip3.9 install colorama tenacity
 sudo pip3.9 install transformers_stream_generator # for Qwen-7B-Chat
 sudo pip3.9 install openai==1.2.4 # for camel
+sudo pip3.9 install qdrant-client==1.6.4 # vector DB
+sudo pip3.9 install unstructured unstructured_inference pdf2image pdfminer.six pikepdf pypdf
+sudo pip3.9 install opencv-python==4.8.1.78 opencv-contrib-python==4.8.1.78
 ```
 
 

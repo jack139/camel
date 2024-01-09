@@ -132,6 +132,7 @@ class EmbeddingModelType(Enum):
     BABBAGE_1 = "text-embedding-babbage-001"
     CURIE_1 = "text-embedding-curie-001"
     DAVINCI_1 = "text-embedding-davinci-001"
+    QWEN_7B = "Qwen-7B-Chat"
 
     @property
     def is_openai(self) -> bool:
@@ -142,6 +143,7 @@ class EmbeddingModelType(Enum):
             EmbeddingModelType.BABBAGE_1,
             EmbeddingModelType.CURIE_1,
             EmbeddingModelType.DAVINCI_1,
+            EmbeddingModelType.QWEN_7B,
         }
 
     @property
@@ -156,6 +158,8 @@ class EmbeddingModelType(Enum):
             return 4096
         elif self is EmbeddingModelType.DAVINCI_1:
             return 12288
+        elif self is EmbeddingModelType.QWEN_7B:
+            return 4096
         else:
             raise ValueError(f"Unknown model type {self}.")
 
