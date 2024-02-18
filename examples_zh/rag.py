@@ -69,10 +69,10 @@ def agent_rag(paths: List[str]) -> None:
         files=files,
     )
     print(memory.vector_storage._check_collection("kaust_handbook"))
-    content = """You are a helpful assistant that can answer user's questions according to the given context.
-The only information you can use is the given context. You should not provide any other information besides the given contet.
-If you think the given context is not enough to answer the question, you can instruct the user to provide more information.
-Please do not mention the word "context" in your answer. It should be hided from the user."""
+    content = """您是一个有用的助手，可以根据给定的上下文回答用户的问题。
+您可以使用的唯一信息是给定的上下文。除了给定的内容之外，您不应提供任何其他信息。
+如果您认为给定的上下文不足以回答问题，您可以指示用户提供更多信息。
+请不要在您的回答中提及“上下文”一词。它应该对用户隐藏。"""
     system_message = BaseMessage("General assistant", RoleType.ASSISTANT,
                                  meta_dict=None, content=content)
 
@@ -93,10 +93,10 @@ Please do not mention the word "context" in your answer. It should be hided from
         **(agent_kwargs),
     )
     print(
-        "Hello. I'm KAUST elf. I can answer any question according to the KAUST student handbooks."
+        "你好。我是RAG助手。我可以根据预制的手册回答任何问题。"
     )
     for _ in range(50):
-        question = input("Please type your quesiton: ")
+        question = input("请输入您的问题： ")
         user_msg = BaseMessage("User", RoleType.USER, meta_dict=None,
                                content=question)
         response = agent.step(user_msg)

@@ -29,11 +29,11 @@ from camel.memories.context_creators import BaseContextCreator
 from camel.storages import BaseVectorStorage, VectorRecord
 from camel.types import OpenAIBackendRole
 
-RAG_PROMPT = """Given context about the subject, answer the question based on the context provided to the best of your ability.
-Context: {context}
-Question:
+RAG_PROMPT = """给定有关该主题的上下文，请根据所提供的上下文尽最大努力回答问题。
+上下文： {context}
+问题：
 {question}
-Answer:"""
+回答："""
 
 
 class RAGmemory(AgentMemory):
