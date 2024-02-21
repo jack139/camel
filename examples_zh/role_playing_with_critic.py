@@ -101,6 +101,6 @@ if __name__ == "__main__":
     # model_path = "lmsys/vicuna-7b-v1.5"
     main(
         model_type=ModelType.QWEN,
-        model_path="../lm_model/Qwen-7B-Chat",
+        model_path="../lm_model/Qwen1.5-7B-Chat",
         server_url="http://localhost:8000/v1",
     )

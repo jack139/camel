@@ -96,7 +96,7 @@ if __name__ == "__main__":
         #model_path="../lm_model/Llama-2-7b-chat-hf",
 
         model_type=ModelType.QWEN,
-        model_path="../lm_model/Qwen-7B-Chat",
+        model_path="../lm_model/Qwen1.5-7B-Chat",
         #model_path="../lm_model/Qwen-14B-Chat",
         #model_path="../lm_model/Qwen-1_8B-Chat",
 
