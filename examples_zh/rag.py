@@ -44,7 +44,7 @@ def agent_rag(paths: List[str]) -> None:
     print(f"Load file: {files}")
 
     model_type = ModelType.QWEN
-    model_path = "../lm_model/Qwen-7B-Chat"
+    model_path = "../lm_model/Qwen1.5-7B-Chat"
     server_url = "http://localhost:8000/v1"
 
     context_creator = ScoreBasedContextCreator(

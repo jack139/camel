@@ -132,7 +132,7 @@ class EmbeddingModelType(Enum):
     BABBAGE_1 = "text-embedding-babbage-001"
     CURIE_1 = "text-embedding-curie-001"
     DAVINCI_1 = "text-embedding-davinci-001"
-    QWEN_7B = "Qwen-7B-Chat"
+    QWEN_7B = "Qwen1.5-7B-Chat"
 
     @property
     def is_openai(self) -> bool:
