@@ -83,17 +83,17 @@ class RAGmemory(AgentMemory):
                 dict_record["message"]["content"] = self._formulate_context(
                     record.message.content)
                 records[i] = MemoryRecord.from_dict(dict_record)
-                print(Fore.RED + records[i].message.content + Fore.RESET)
+                #print(Fore.RED + records[i].message.content + Fore.RESET)
         self.chat_history_memory.write_records(records)
 
     def _formulate_context(self, question) -> str:
         query_embedding = self.embedding.embed(self._question_topic)
-        results = self.vector_storage.simple_query(query_embedding, 5)
+        results = self.vector_storage.simple_query(query_embedding, 3)
         content = [result["text"] for result in results]
         for c in content:
             print(Fore.BLUE + c + Fore.RESET)
             print("====================")
-        return RAG_PROMPT.format(context=content, question=question)
+        return RAG_PROMPT.format(context='\n\n'.join(content), question=question)
 
     def retrieve(self) -> List[ContextRecord]:
         return self.chat_history_memory.retrieve()

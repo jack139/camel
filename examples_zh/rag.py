@@ -15,6 +15,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Dict, List
+import readline # 解决input中文时问题，例如删除时回显不正确
 
 from camel.configs import ChatGPTConfig, OpenSourceConfig
 from camel.agents import ChatAgent
@@ -62,13 +63,13 @@ def agent_rag(paths: List[str]) -> None:
             embedding.get_output_dim(),
             path="./ragdb",
             create_collection=True,
-            collection="kaust_handbook",
+            collection="handbook",
             distance=VectorDistance.COSINE,
         ),
         embedding=embedding,
         files=files,
     )
-    print(memory.vector_storage._check_collection("kaust_handbook"))
+    print(memory.vector_storage._check_collection("handbook"))
     content = """您是一个有用的助手，可以根据给定的上下文回答用户的问题。
 您可以使用的唯一信息是给定的上下文。除了给定的内容之外，您不应提供任何其他信息。
 如果您认为给定的上下文不足以回答问题，您可以指示用户提供更多信息。
@@ -96,7 +97,7 @@ def agent_rag(paths: List[str]) -> None:
         "你好。我是RAG助手。我可以根据预制的手册回答任何问题。"
     )
     for _ in range(50):
-        question = input("请输入您的问题： ")
+        question = input("请输入您的问题：")
         user_msg = BaseMessage("User", RoleType.USER, meta_dict=None,
                                content=question)
         response = agent.step(user_msg)
