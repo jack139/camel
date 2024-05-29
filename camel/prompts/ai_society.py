@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import TextPrompt, TextPromptDict
+from camel.prompts.base import TextPrompt, TextPromptDict
 from camel.types import RoleType
 
 
@@ -38,19 +38,23 @@ class AISocietyPromptTemplateDict(TextPromptDict):
             outlines the rules of the conversation and provides instructions
             for giving instructions to the AI assistant.
     """
+
     GENERATE_ASSISTANTS = TextPrompt(
         """你是一个有用的助手，可以扮演许多不同的角色。
 现在请列出可以利用你在不同领域的专业知识扮演的{num_roles}个不同角色。
-按字母顺序对它们进行排序。 无需解释。""")
+按字母顺序对它们进行排序。 无需解释。"""
+    )
 
     GENERATE_USERS = TextPrompt(
         """请列出{num_roles}个最常见和多样化的互联网用户群体或职业。
 使用单数形式。无需解释。
-按字母顺序对它们进行排序。 无需解释。""")
+按字母顺序对它们进行排序。 无需解释。"""
+    )
 
     GENERATE_TASKS = TextPrompt(
         """列出{num_tasks}个可以由{assistant_role}协助{user_role}共同完成的不同任务。
-保持简洁。要有创意。""")
+保持简洁。要有创意。"""
+    )
 
     TASK_SPECIFY_PROMPT = TextPrompt(
         """以下是{assistant_role}将帮助{user_role}完成的任务：{task}。
@@ -108,16 +112,19 @@ class AISocietyPromptTemplateDict(TextPromptDict):
         """你是一名{critic_role}，与一名{user_role}和一名{assistant_role}合作解决一项任务：{task}。
 你的工作是从他们的建议中选择一个选项并提供你的解释。
 你的选择标准是{criteria}。
-你始终必须从建议中选择一个选项。""")
+你始终必须从建议中选择一个选项。"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            "generate_assistants": self.GENERATE_ASSISTANTS,
-            "generate_users": self.GENERATE_USERS,
-            "generate_tasks": self.GENERATE_TASKS,
-            "task_specify_prompt": self.TASK_SPECIFY_PROMPT,
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
-            RoleType.USER: self.USER_PROMPT,
-            RoleType.CRITIC: self.CRITIC_PROMPT,
-        })
+        self.update(
+            {
+                "generate_assistants": self.GENERATE_ASSISTANTS,
+                "generate_users": self.GENERATE_USERS,
+                "generate_tasks": self.GENERATE_TASKS,
+                "task_specify_prompt": self.TASK_SPECIFY_PROMPT,
+                RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+                RoleType.USER: self.USER_PROMPT,
+                RoleType.CRITIC: self.CRITIC_PROMPT,
+            }
+        )

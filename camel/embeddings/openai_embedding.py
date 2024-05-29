@@ -11,13 +11,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
+import os
 from typing import Any, List, Optional
 
 from openai import OpenAI
 
-from camel.embeddings import BaseEmbedding
+from camel.embeddings.base import BaseEmbedding
 from camel.types import EmbeddingModelType
-from camel.utils import openai_api_key_required
+from camel.utils import api_key_required
 
 
 class OpenAIEmbedding(BaseEmbedding[str]):
@@ -26,6 +27,8 @@ class OpenAIEmbedding(BaseEmbedding[str]):
     Args:
         model (OpenAiEmbeddingModel, optional): The model type to be used for
             generating embeddings. (default: :obj:`ModelType.ADA_2`)
+        api_key (Optional[str]): The API key for authenticating with the
+            OpenAI service. (default: :obj:`None`)
 
     Raises:
         RuntimeError: If an unsupported model type is specified.
@@ -34,23 +37,16 @@ class OpenAIEmbedding(BaseEmbedding[str]):
     def __init__(
         self,
         model_type: EmbeddingModelType = EmbeddingModelType.QWEN_7B,
-        server_url: Optional[str] = None,
+        api_key: Optional[str] = None,
     ) -> None:
         if not model_type.is_openai:
             raise ValueError("Invalid OpenAI embedding model type.")
         self.model_type = model_type
         self.output_dim = model_type.output_dim
-        if server_url is None:
-            self.client = OpenAI()
-        else:
-            self.client = OpenAI(
-                base_url=server_url,
-                timeout=60,
-                max_retries=3,
-            )
+        self._api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        self.client = OpenAI(timeout=60, max_retries=3, api_key=self._api_key)
 
-
-    @openai_api_key_required
+    @api_key_required
     def embed_list(
         self,
         objs: List[str],

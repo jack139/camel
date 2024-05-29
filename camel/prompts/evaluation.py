@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import TextPrompt, TextPromptDict
+from camel.prompts.base import TextPrompt, TextPromptDict
 
 
 class EvaluationPromptTemplateDict(TextPromptDict):
@@ -31,10 +31,13 @@ class EvaluationPromptTemplateDict(TextPromptDict):
 以下是一些示例问题：
 {examples}
 
-现在生成你自己的{num_questions}个问题。要有创意""")
+现在生成你自己的{num_questions}个问题。要有创意"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            "generate_questions": self.GENERATE_QUESTIONS,
-        })
+        self.update(
+            {
+                "generate_questions": self.GENERATE_QUESTIONS,
+            }
+        )

@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import TextPrompt, TextPromptDict
+from camel.prompts.base import TextPrompt, TextPromptDict
 from camel.types import RoleType
 
 
@@ -37,17 +37,21 @@ class CodePromptTemplateDict(TextPromptDict):
             outlines the rules of the conversation and provides instructions
             for giving instructions to the AI assistant.
     """
+
     GENERATE_LANGUAGES = TextPrompt(
         """列出{num_languages}最常用的计算机编程语言。
-保持简洁。 无需解释。""")
+保持简洁。 无需解释。"""
+    )
 
     GENERATE_DOMAINS = TextPrompt(
         """列出{num_domains}个编程可以帮助的最常见的研究领域。
-保持简洁。 按字母顺序对它们进行排序。 无需解释。""")
+保持简洁。 按字母顺序对它们进行排序。 无需解释。"""
+    )
 
     GENERATE_TASKS = TextPrompt(
         """列出程序员可以帮助使用{language}在{domain}中工作的人员执行的{num_tasks}个不同的任务。
-保持简洁。 要有创意。""")
+保持简洁。 要有创意。"""
+    )
 
     TASK_SPECIFY_PROMPT = TextPrompt(
         """以下是程序员将帮助在{domain}中工作的人员使用{language}完成的任务：{task}。
@@ -71,7 +75,8 @@ class CodePromptTemplateDict(TextPromptDict):
 
 <你的解决方案>必须包含{language}代码，并且应该非常具体，包括详细的解释并提供更好的实现和任务解决示例。
 对于重复提出的指令和输入，<你的解决方案>需要有一些变化，不要总是提供一样的描述。
-<你的解决方案>最后一句话必须是“请说下一个指令”。""")
+<你的解决方案>最后一句话必须是“请说下一个指令”。"""
+    )
 
     USER_PROMPT = TextPrompt(
         """永远不要忘记您是在{domain}工作的人，而我是一名计算机程序员。 永远不要翻转角色！ 你永远都会指导我。
@@ -99,15 +104,18 @@ class CodePromptTemplateDict(TextPromptDict):
 除了你的“指令”和可选的相应“输入”之外，请勿添加任何其他内容！
 不断向我提出指令和必要的输入，直到你认为任务已完成。
 当任务完成后，你只能回复一句话：任务完成。
-除非我的回答已经解决了你的任务，否则切勿说“任务完成”。""")
+除非我的回答已经解决了你的任务，否则切勿说“任务完成”。"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            "generate_languages": self.GENERATE_LANGUAGES,
-            "generate_domains": self.GENERATE_DOMAINS,
-            "generate_tasks": self.GENERATE_TASKS,
-            "task_specify_prompt": self.TASK_SPECIFY_PROMPT,
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
-            RoleType.USER: self.USER_PROMPT,
-        })
+        self.update(
+            {
+                "generate_languages": self.GENERATE_LANGUAGES,
+                "generate_domains": self.GENERATE_DOMAINS,
+                "generate_tasks": self.GENERATE_TASKS,
+                "task_specify_prompt": self.TASK_SPECIFY_PROMPT,
+                RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+                RoleType.USER: self.USER_PROMPT,
+            }
+        )

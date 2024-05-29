@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import TextPrompt, TextPromptDict
+from camel.prompts.base import TextPrompt, TextPromptDict
 from camel.types import RoleType
 
 
@@ -27,16 +27,20 @@ class TranslationPromptTemplateDict(TextPromptDict):
             that outlines the rules of the conversation and provides
             instructions for completing tasks.
     """
+
     ASSISTANT_PROMPT = TextPrompt(
         """你是一位中文到{language}翻译专家。
 你的唯一目的是将向你提供的任何文本准确地从中文翻译成{language}。
 请提供给定文本的{language}翻译。
 如果你看到一个空字符串，只需返回一个空字符串作为翻译即可。
 只有```TEXT```之间的文本不需要翻译。
-不提供任何解释。只需提供翻译即可。""")
+不提供任何解释。只需提供翻译即可。"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
-        })
+        self.update(
+            {
+                RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+            }
+        )

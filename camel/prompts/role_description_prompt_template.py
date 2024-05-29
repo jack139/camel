@@ -13,7 +13,8 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import AISocietyPromptTemplateDict, TextPrompt
+from camel.prompts.ai_society import AISocietyPromptTemplateDict
+from camel.prompts.base import TextPrompt
 from camel.types import RoleType
 
 
@@ -32,22 +33,27 @@ class RoleDescriptionPromptTemplateDict(AISocietyPromptTemplateDict):
             outlines the rules of the conversation and provides instructions
             for giving instructions to the AI assistant.
     """
+
     ROLE_DESCRIPTION_PROMPT = TextPrompt("""===== 角色及其描述 =====
 {user_role}和{assistant_role}正在协作完成任务：{task}。
 {user_role}用来完成任务的能力、特征、职责和工作流程：{user_description}
 {assistant_role}的能力、特征、职责和完成任务的工作流程：{assistant_description}
 """)
 
-    ASSISTANT_PROMPT = TextPrompt(ROLE_DESCRIPTION_PROMPT +
-                                  AISocietyPromptTemplateDict.ASSISTANT_PROMPT)
+    ASSISTANT_PROMPT = TextPrompt(
+        ROLE_DESCRIPTION_PROMPT + AISocietyPromptTemplateDict.ASSISTANT_PROMPT
+    )
 
-    USER_PROMPT = TextPrompt(ROLE_DESCRIPTION_PROMPT +
-                             AISocietyPromptTemplateDict.USER_PROMPT)
+    USER_PROMPT = TextPrompt(
+        ROLE_DESCRIPTION_PROMPT + AISocietyPromptTemplateDict.USER_PROMPT
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            "role_description": self.ROLE_DESCRIPTION_PROMPT,
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
-            RoleType.USER: self.USER_PROMPT,
-        })
+        self.update(
+            {
+                "role_description": self.ROLE_DESCRIPTION_PROMPT,
+                RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+                RoleType.USER: self.USER_PROMPT,
+            }
+        )

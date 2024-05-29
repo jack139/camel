@@ -1,6 +1,6 @@
 🐫 **Welcome to CAMEL!** 🐫
 
-Thank you for your interest in contributing to the CAMEL project! 🎉 We're excited to have your support. As an open-source initiative in a rapidly evolving and open-ended field, we wholeheartedly welcome contributions of all kinds. Whether you want to introduce new features, enhance the infrastructure, improve documentation, asking issues, add more examples, implement state-of-the-art research ideas, or fix bugs, we appreciate your enthusiasm and efforts. 🙌  You are welcome to join our [slack](https://join.slack.com/t/camel-kwr1314/shared_invite/zt-1vy8u9lbo-ZQmhIAyWSEfSwLCl2r2eKA) for more efficient communication. 💬
+Thank you for your interest in contributing to the CAMEL project! 🎉 We're excited to have your support. As an open-source initiative in a rapidly evolving and open-ended field, we wholeheartedly welcome contributions of all kinds. Whether you want to introduce new features, enhance the infrastructure, improve documentation, asking issues, add more examples, implement state-of-the-art research ideas, or fix bugs, we appreciate your enthusiasm and efforts. 🙌  You are welcome to join our [slack](https://join.slack.com/t/camel-ai/shared_invite/zt-2g7xc41gy-_7rcrNNAArIP6sLQqldkqQ) for more efficient communication. 💬
 
 ## Guidelines 📝
 
@@ -69,10 +69,11 @@ poetry install --with dev,docs
 poetry install --with dev,docs -E all  # (Optional)
 
 # The following command installs a pre-commit hook into the local git repo,
-$ so every commit gets auto-formatted and linted.
+# so every commit gets auto-formatted and linted.
 pre-commit install
 
-# do something with camel
+# Run camel's unit tests
+pytest test
 
 # Exit the virtual environment
 exit
@@ -91,8 +92,8 @@ Whenever you add, update, or delete any dependencies in `pyproject.toml`, please
 ### Linting & Formatting ✨
 
 ```bash
-flake8
-isort .
+poetry run ruff check .
+poetry run ruff format .
 ```
 
 For extra validation of type hints:

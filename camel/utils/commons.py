@@ -11,26 +11,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
-import inspect
+import importlib
 import os
+import platform
 import re
 import socket
 import time
 import zipfile
 from functools import wraps
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    TypeVar,
-    cast,
-)
+from typing import Any, Callable, List, Optional, Set, TypeVar, cast
 from urllib.parse import urlparse
 
+import pydantic
 import requests
 
 from camel.types import TaskType
@@ -38,9 +30,8 @@ from camel.types import TaskType
 F = TypeVar('F', bound=Callable[..., Any])
 
 
-def openai_api_key_required(func: F) -> F:
-    r"""Decorator that checks if the OpenAI API key is available in the
-    environment variables.
+def api_key_required(func: F) -> F:
+    r"""Decorator that checks if the API key is available either as an environment variable or passed directly.
 
     Args:
         func (callable): The function to be wrapped.
@@ -49,16 +40,22 @@ def openai_api_key_required(func: F) -> F:
         callable: The decorated function.
 
     Raises:
-        ValueError: If the OpenAI API key is not found in the environment
-            variables.
+        ValueError: If the API key is not found, either as an environment
+            variable or directly passed.
     """
 
     @wraps(func)
     def wrapper(self, *args, **kwargs):
-        if 'OPENAI_API_KEY' in os.environ:
+        if self.model_type.is_openai:
+            if not self._api_key and 'OPENAI_API_KEY' not in os.environ:
+                raise ValueError('OpenAI API key not found.')
+            return func(self, *args, **kwargs)
+        elif self.model_type.is_anthropic:
+            if 'ANTHROPIC_API_KEY' not in os.environ:
+                raise ValueError('Anthropic API key not found.')
             return func(self, *args, **kwargs)
         else:
-            raise ValueError('OpenAI API key not found.')
+            raise ValueError('Unsupported model type.')
 
     return cast(F, wrapper)
 
@@ -116,12 +113,26 @@ def get_first_int(string: str) -> Optional[int]:
 
 
 def download_tasks(task: TaskType, folder_path: str) -> None:
+    r"""Downloads task-related files from a specified URL and extracts them.
+
+    This function downloads a zip file containing tasks based on the specified
+    `task` type from a predefined URL, saves it to `folder_path`, and then
+    extracts the contents of the zip file into the same folder. After
+    extraction, the zip file is deleted.
+
+    Args:
+        task (TaskType): An enum representing the type of task to download.
+        folder_path (str): The path of the folder where the zip file will be
+                           downloaded and extracted.
+    """
     # Define the path to save the zip file
     zip_file_path = os.path.join(folder_path, "tasks.zip")
 
     # Download the zip file from the Google Drive link
-    response = requests.get("https://huggingface.co/datasets/camel-ai/"
-                            f"metadata/resolve/main/{task.value}_tasks.zip")
+    response = requests.get(
+        "https://huggingface.co/datasets/camel-ai/"
+        f"metadata/resolve/main/{task.value}_tasks.zip"
+    )
 
     # Save the zip file
     with open(zip_file_path, "wb") as f:
@@ -132,70 +143,6 @@ def download_tasks(task: TaskType, folder_path: str) -> None:
 
     # Delete the zip file
     os.remove(zip_file_path)
-
-
-def parse_doc(func: Callable) -> Dict[str, Any]:
-    r"""Parse the docstrings of a function to extract the function name,
-    description and parameters.
-
-    Args:
-        func (Callable): The function to be parsed.
-    Returns:
-        Dict[str, Any]: A dictionary with the function's name,
-            description, and parameters.
-    """
-
-    doc = inspect.getdoc(func)
-    if not doc:
-        raise ValueError(
-            f"Invalid function {func.__name__}: no docstring provided.")
-
-    properties = {}
-    required = []
-
-    parts = re.split(r'\n\s*\n', doc)
-    func_desc = parts[0].strip()
-
-    args_section = next((p for p in parts if 'Args:' in p), None)
-    if args_section:
-        args_descs: List[Tuple[str, str, str, ]] = re.findall(
-            r'(\w+)\s*\((\w+)\):\s*(.*)', args_section)
-        properties = {
-            name.strip(): {
-                'type': type,
-                'description': desc
-            }
-            for name, type, desc in args_descs
-        }
-        for name in properties:
-            required.append(name)
-
-    # Parameters from the function signature
-    sign_params = list(inspect.signature(func).parameters.keys())
-    if len(sign_params) != len(required):
-        raise ValueError(
-            f"Number of parameters in function signature ({len(sign_params)})"
-            f" does not match that in docstring ({len(required)}).")
-
-    for param in sign_params:
-        if param not in required:
-            raise ValueError(f"Parameter '{param}' in function signature"
-                             " is missing in the docstring.")
-
-    parameters = {
-        "type": "object",
-        "properties": properties,
-        "required": required,
-    }
-
-    # Construct the function dictionary
-    function_dict = {
-        "name": func.__name__,
-        "description": func_desc,
-        "parameters": parameters,
-    }
-
-    return function_dict
 
 
 def get_task_list(task_response: str) -> List[str]:
@@ -241,3 +188,141 @@ def check_server_running(server_url: str) -> bool:
 
     # if the port is open, the result should be 0.
     return result == 0
+
+
+def dependencies_required(*required_modules: str) -> Callable[[F], F]:
+    r"""A decorator to ensure that specified Python modules
+    are available before a function executes.
+
+    Args:
+        required_modules (str): The required modules to be checked for
+            availability.
+
+    Returns:
+        Callable[[F], F]: The original function with the added check for
+            required module dependencies.
+
+    Raises:
+        ImportError: If any of the required modules are not available.
+
+    Example:
+        ::
+
+            @dependencies_required('numpy', 'pandas')
+            def data_processing_function():
+                # Function implementation...
+    """
+
+    def decorator(func: F) -> F:
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            missing_modules = [
+                m for m in required_modules if not is_module_available(m)
+            ]
+            if missing_modules:
+                raise ImportError(
+                    f"Missing required modules: {', '.join(missing_modules)}"
+                )
+            return func(*args, **kwargs)
+
+        return cast(F, wrapper)
+
+    return decorator
+
+
+def is_module_available(module_name: str) -> bool:
+    r"""Check if a module is available for import.
+
+    Args:
+        module_name (str): The name of the module to check for availability.
+
+    Returns:
+        bool: True if the module can be imported, False otherwise.
+    """
+    try:
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
+
+
+def api_keys_required(*required_keys: str) -> Callable[[F], F]:
+    r"""A decorator to check if the required API keys are
+    present in the environment variables.
+
+    Args:
+        required_keys (str): The required API keys to be checked.
+
+    Returns:
+        Callable[[F], F]: The original function with the added check
+            for required API keys.
+
+    Raises:
+        ValueError: If any of the required API keys are missing in the
+            environment variables.
+
+    Example:
+        ::
+
+            @api_keys_required('API_KEY_1', 'API_KEY_2')
+            def some_api_function():
+                # Function implementation...
+    """
+
+    def decorator(func: F) -> F:
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            missing_keys = [k for k in required_keys if k not in os.environ]
+            if missing_keys:
+                raise ValueError(f"Missing API keys: {', '.join(missing_keys)}")
+            return func(*args, **kwargs)
+
+        return cast(F, wrapper)
+
+    return decorator
+
+
+def get_system_information():
+    r"""Gathers information about the operating system.
+
+    Returns:
+        dict: A dictionary containing various pieces of OS information.
+    """
+    sys_info = {
+        "OS Name": os.name,
+        "System": platform.system(),
+        "Release": platform.release(),
+        "Version": platform.version(),
+        "Machine": platform.machine(),
+        "Processor": platform.processor(),
+        "Platform": platform.platform(),
+    }
+
+    return sys_info
+
+
+def to_pascal(snake: str) -> str:
+    """Convert a snake_case string to PascalCase.
+
+    Args:
+        snake (str): The snake_case string to be converted.
+
+    Returns:
+        str: The converted PascalCase string.
+    """
+    # Check if the string is already in PascalCase
+    if re.match(r'^[A-Z][a-zA-Z0-9]*([A-Z][a-zA-Z0-9]*)*$', snake):
+        return snake
+    # Remove leading and trailing underscores
+    snake = snake.strip('_')
+    # Replace multiple underscores with a single one
+    snake = re.sub('_+', '_', snake)
+    # Convert to PascalCase
+    return re.sub(
+        '_([0-9A-Za-z])',
+        lambda m: m.group(1).upper(),
+        snake.title(),
+    )
+
+
+PYDANTIC_V2 = pydantic.VERSION.startswith("2.")

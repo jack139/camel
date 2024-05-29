@@ -11,7 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
-import pytest
 
 from camel.prompts.base import (
     CodePrompt,
@@ -20,12 +19,9 @@ from camel.prompts.base import (
     return_prompt_wrapper,
     wrap_prompt_functions,
 )
-from camel.utils import PythonInterpreter
-from camel.utils.python_interpreter import InterpreterError
 
 
 def test_return_prompt_wrapper():
-
     def my_function():
         return "Hello, world!"
 
@@ -36,7 +32,6 @@ def test_return_prompt_wrapper():
 
 
 def test_return_prompt_wrapper_with_tuple():
-
     def my_function():
         return ("Hello, {name}!", "Welcome, {name}!")
 
@@ -51,7 +46,6 @@ def test_return_prompt_wrapper_with_tuple():
 def test_wrap_prompt_functions():
     # Example class for testing
     class MyClass:
-
         def __init__(self, *args, **kwargs):
             pass
 
@@ -89,8 +83,9 @@ def test_text_prompt_format():
     prompt = TextPrompt('Your name and age are: {name}, {age}')
 
     name, age = 'John', 30
-    assert prompt.format(name=name,
-                         age=age) == 'Your name and age are: John, 30'
+    assert (
+        prompt.format(name=name, age=age) == 'Your name and age are: John, 30'
+    )
 
     # Partial formatting
     assert prompt.format(name=name) == 'Your name and age are: John, {age}'
@@ -139,21 +134,17 @@ def test_code_prompt_set_code_type():
     assert code_prompt.code_type == "python"
 
 
-def test_code_prompt_execute(capsys):
-    code_prompt = CodePrompt("a = 1\nprint('Hello, World!')",
-                             code_type="python")
-    interpreter = PythonInterpreter(action_space={"print": print})
-    result, interpreter = code_prompt.execute(interpreter=interpreter)
-    captured = capsys.readouterr()
-    assert result == 1
-    assert interpreter.state["a"] == 1
-    assert captured.out == "Hello, World!\n"
+def test_code_prompt_execute(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: 'Y')
+    code_prompt = CodePrompt(
+        "a = 1\nprint('Hello, World!')", code_type="python"
+    )
+    result = code_prompt.execute()
+    assert result == "Hello, World!\n"
 
 
-def test_code_prompt_execute_error():
+def test_code_prompt_execute_error(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "Y")
     code_prompt = CodePrompt("print('Hello, World!'", code_type="python")
-    interpreter = PythonInterpreter(action_space={"print": print},
-                                    raise_error=True)
-    with pytest.raises(InterpreterError) as e:
-        _, _ = code_prompt.execute(interpreter=interpreter)
-    assert e.value.args[0].startswith("Syntax error in code:")
+    result = code_prompt.execute()
+    assert "SyntaxError:" in result

@@ -7,45 +7,27 @@
 运行方法可以参考 TEST_zh.md
 
 
+[![Colab][colab-image]][colab-url]
+[![Hugging Face][huggingface-image]][huggingface-url]
+[![Slack][slack-image]][slack-url]
+[![Discord][discord-image]][discord-url]
+[![Wechat][wechat-image]][wechat-url]
+[![Twitter][twitter-image]][twitter-url]
 
-<div style="left">
-  <a href="https://colab.research.google.com/drive/1AzP33O8rnMW__7ocWJhVBXjKziJXPtim?usp=sharing" target="_blank">
-    <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" />
-  </a>
-  <a href="https://huggingface.co/camel-ai" target="_blank">
-    <img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CAMEL--AI-ffc107?color=ffc107&logoColor=white" />
-  </a>
-  <a href="https://join.slack.com/t/camel-kwr1314/shared_invite/zt-1vy8u9lbo-ZQmhIAyWSEfSwLCl2r2eKA" target="_blank">
-      <img alt="Slack" src="https://img.shields.io/badge/Slack-CAMEL--AI-blueviolet?logo=slack" />
-  </a>
-  <a href="https://discord.gg/CNcNpquyDc" target="_blank">
-    <img alt="Discord" src="https://img.shields.io/badge/Discord-CAMEL--AI-7289da?logo=discord&logoColor=white&color=7289da" />
-  </a>
-  <a href="https://ghli.org/camel/wechat.png" target="_blank">
-    <img alt="Discord" src="https://img.shields.io/badge/WeChat-CamelAIOrg-brightgreen?logo=wechat&logoColor=white" />
-  </a>
-  <a href="https://twitter.com/CamelAIOrg" target="_blank">
-    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/CamelAIOrg?style=social&color=brightgreen&logo=twitter" />
-  </a>
-</div>
+______________________________________________________________________
 
-# CAMEL: Communicative Agents for “Mind” Exploration of Large Scale Language Model Society
+# CAMEL: Communicative Agents for “Mind” Exploration of Large Language Model Society
 
-<div align="center">
+[![Python Version][python-image]][python-url]
+[![PyTest Status][pytest-image]][pytest-url]
+[![Documentation][docs-image]][docs-url]
+[![Star][star-image]][star-url]
+[![Package License][package-license-image]][package-license-url]
+[![Data License][data-license-image]][data-license-url]
 
-  <a>![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-brightgreen.svg)</a>
-  <a href="https://github.com/camel-ai/camel/actions/workflows/pytest_package.yml">![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/camel-ai/camel/pytest_package.yml?label=tests&logo=github)</a>
-  <a href="https://camel-ai.github.io/camel/">
-    ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/camel-ai/camel/documentation.yaml?label=docs&logo=github)
-  </a>
-  <a href="https://github.com/camel-ai/camel/stargazers" target="_blank">
-  <img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/camel-ai/camel?label=stars&logo=github&color=brightgreen" />
-  </a>
-  <a href="https://github.com/camel-ai/camel/blob/master/licenses/LICENSE">![License](https://img.shields.io/github/license/camel-ai/camel?label=license&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMi43NSAyLjc1YS43NS43NSAwIDAwLTEuNSAwVjQuNUg5LjI3NmExLjc1IDEuNzUgMCAwMC0uOTg1LjMwM0w2LjU5NiA1Ljk1N0EuMjUuMjUgMCAwMTYuNDU1IDZIMi4zNTNhLjc1Ljc1IDAgMTAwIDEuNUgzLjkzTC41NjMgMTUuMThhLjc2Mi43NjIgMCAwMC4yMS44OGMuMDguMDY0LjE2MS4xMjUuMzA5LjIyMS4xODYuMTIxLjQ1Mi4yNzguNzkyLjQzMy42OC4zMTEgMS42NjIuNjIgMi44NzYuNjJhNi45MTkgNi45MTkgMCAwMDIuODc2LS42MmMuMzQtLjE1NS42MDYtLjMxMi43OTItLjQzMy4xNS0uMDk3LjIzLS4xNTguMzEtLjIyM2EuNzUuNzUgMCAwMC4yMDktLjg3OEw1LjU2OSA3LjVoLjg4NmMuMzUxIDAgLjY5NC0uMTA2Ljk4NC0uMzAzbDEuNjk2LTEuMTU0QS4yNS4yNSAwIDAxOS4yNzUgNmgxLjk3NXYxNC41SDYuNzYzYS43NS43NSAwIDAwMCAxLjVoMTAuNDc0YS43NS43NSAwIDAwMC0xLjVIMTIuNzVWNmgxLjk3NGMuMDUgMCAuMS4wMTUuMTQuMDQzbDEuNjk3IDEuMTU0Yy4yOS4xOTcuNjMzLjMwMy45ODQuMzAzaC44ODZsLTMuMzY4IDcuNjhhLjc1Ljc1IDAgMDAuMjMuODk2Yy4wMTIuMDA5IDAgMCAuMDAyIDBhMy4xNTQgMy4xNTQgMCAwMC4zMS4yMDZjLjE4NS4xMTIuNDUuMjU2Ljc5LjRhNy4zNDMgNy4zNDMgMCAwMDIuODU1LjU2OCA3LjM0MyA3LjM0MyAwIDAwMi44NTYtLjU2OWMuMzM4LS4xNDMuNjA0LS4yODcuNzktLjM5OWEzLjUgMy41IDAgMDAuMzEtLjIwNi43NS43NSAwIDAwLjIzLS44OTZMMjAuMDcgNy41aDEuNTc4YS43NS43NSAwIDAwMC0xLjVoLTQuMTAyYS4yNS4yNSAwIDAxLS4xNC0uMDQzbC0xLjY5Ny0xLjE1NGExLjc1IDEuNzUgMCAwMC0uOTg0LS4zMDNIMTIuNzVWMi43NXpNMi4xOTMgMTUuMTk4YTUuNDE4IDUuNDE4IDAgMDAyLjU1Ny42MzUgNS40MTggNS40MTggMCAwMDIuNTU3LS42MzVMNC43NSA5LjM2OGwtMi41NTcgNS44M3ptMTQuNTEtLjAyNGMuMDgyLjA0LjE3NC4wODMuMjc1LjEyNi41My4yMjMgMS4zMDUuNDUgMi4yNzIuNDVhNS44NDYgNS44NDYgMCAwMDIuNTQ3LS41NzZMMTkuMjUgOS4zNjdsLTIuNTQ3IDUuODA3eiI+PC9wYXRoPjwvc3ZnPgo=)</a>
-</div>
 
 <p align="center">
-   <a href="https://github.com/camel-ai/camel#community">Community</a> |
+  <a href="https://github.com/camel-ai/camel#community">Community</a> |
   <a href="https://github.com/camel-ai/camel#installation">Installation</a> |
   <a href="https://camel-ai.github.io/camel/">Documentation</a> |
   <a href="https://github.com/camel-ai/camel/tree/HEAD/examples">Examples</a> |
@@ -56,7 +38,7 @@
 </p>
 
 <p align="center">
-  <img src='https://raw.githubusercontent.com/camel-ai/camel/master/misc/logo.png' width=800>
+  <img src='https://raw.githubusercontent.com/camel-ai/camel/master/misc/primary_logo.png' width=800>
 </p>
 
 ## Overview
@@ -65,7 +47,7 @@ The rapid advancement of conversational and chat-based language models has led t
 ## Community
 🐫 CAMEL is an open-source library designed for the study of autonomous and communicative agents. We believe that studying these agents on a large scale offers valuable insights into their behaviors, capabilities, and potential risks. To facilitate research in this field, we implement and support various types of agents, tasks, prompts, models, and simulated environments.
 
-Join us ([*Slack*](https://join.slack.com/t/camel-kwr1314/shared_invite/zt-1vy8u9lbo-ZQmhIAyWSEfSwLCl2r2eKA), [*Discord*](https://discord.gg/CNcNpquyDc) or [*WeChat*](https://ghli.org/camel/wechat.png)) in pushing the boundaries of building AI Societiy.
+Join us ([*Slack*](https://join.slack.com/t/camel-ai/shared_invite/zt-2g7xc41gy-_7rcrNNAArIP6sLQqldkqQ), [*Discord*](https://discord.gg/CNcNpquyDc) or [*WeChat*](https://ghli.org/camel/wechat.png)) in pushing the boundaries of building AI Society.
 
 ## Try it yourself
 We provide a [![Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AzP33O8rnMW__7ocWJhVBXjKziJXPtim?usp=sharing) demo showcasing a conversation between two ChatGPT agents playing roles as a python programmer and a stock trader collaborating on developing a trading bot for stock market.
@@ -78,15 +60,23 @@ We provide a [![Google Colab](https://colab.research.google.com/assets/colab-bad
 
 ### From PyPI
 
-To install the base camel library, simply run `pip install camel-ai`
-
-Some features reuqire extra dependencies.
-
-To use hugging-face agent, run `pip install camel-ai[huggingface-agent]`
-
-To enable RAG or use agent memory, run `pip install camel-ai[tools]`
-
-To install with all dependencies, run `pip install camel-ai[all]`
+To install the base CAMEL library:
+```bash
+pip install camel-ai
+```
+Some features require extra dependencies:
+- To use the HuggingFace agents:
+    ```bash
+    pip install 'camel-ai[huggingface-agent]'
+    ```
+- To enable RAG or use agent memory:
+    ```bash
+    pip install 'camel-ai[tools]'
+    ```
+- To install with all dependencies:
+    ```bash
+    pip install 'camel-ai[all]'
+    ```
 
 ### From Source
 
@@ -108,10 +98,8 @@ poetry shell
 # It takes about 90 seconds to resolve dependencies
 poetry install
 
-# Or if you want to use "huggingface agent"
-poetry install -E huggingface-agent # (Optional)
-
-# do something with camel
+# Or if you want to use all other extra packages
+poetry install -E all  # (Optional)
 
 # Exit the virtual environment
 exit
@@ -126,7 +114,7 @@ conda create --name camel python=3.10
 conda activate camel
 
 # Clone github repo
-git clone -b v0.1.0 https://github.com/camel-ai/camel.git
+git clone -b v0.1.5 https://github.com/camel-ai/camel.git
 
 # Change directory into project directory
 cd camel
@@ -134,18 +122,19 @@ cd camel
 # Install camel from source
 pip install -e .
 
-# Or if you want to use "huggingface agent"
-pip install -e .[huggingface-agent] # (Optional)
+# Or if you want to use all other extra packages
+pip install -e .[all] # (Optional)
 ```
 
 ## Documentation
 
-[CAMEL package documentation pages](https://camel-ai.github.io/camel/)
+[CAMEL package documentation pages](https://camel-ai.github.io/camel/).
 
 ## Example
-You can find a list of tasks for different set of assistant and user role pairs [here](https://drive.google.com/file/d/194PPaSTBR07m-PzjS-Ty6KlPLdFIPQDd/view?usp=share_link)
 
-Run the `role_playing.py` script
+You can find a list of tasks for different sets of assistant and user role pairs [here](https://drive.google.com/file/d/194PPaSTBR07m-PzjS-Ty6KlPLdFIPQDd/view?usp=share_link).
+
+As an example, to run the `role_playing.py` script:
 
 First, you need to add your OpenAI API key to system environment variables. The method to do this depends on your operating system and the shell you're using.
 
@@ -171,7 +160,6 @@ set OPENAI_API_BASE_URL=<inert your OpenAI API BASE URL>  #(Should you utilize a
 # Export your OpenAI API key
 $env:OPENAI_API_KEY="<insert your OpenAI API key>"
 $env:OPENAI_API_BASE_URL="<inert your OpenAI API BASE URL>"  #(Should you utilize an OpenAI proxy service, kindly specify this)
-
 ```
 
 Replace `<insert your OpenAI API key>` with your actual OpenAI API key in each case. Make sure there are no spaces around the `=` sign.
@@ -188,7 +176,7 @@ Please note that the environment variable is session-specific. If you open a new
 
 ## Use Open-Source Models as Backends
 
-The basic workflow of using an open-sourced model as the backend is based on an external server running LLM inference service, e.g. during the development we chose [FastChat](https://github.com/lm-sys/FastChat) to run the service. 
+The basic workflow of using an open-sourced model as the backend is based on an external server running LLM inference service, e.g. during the development we chose [FastChat](https://github.com/lm-sys/FastChat) to run the service.
 
 We do not fix the choice of server to decouple the implementation of any specific LLM inference server with CAMEL (indicating the server needs to be deployed by the user himself). But the server to be deployed must satisfy that **it supports OpenAI-compatible APIs, especially the method `openai.ChatCompletion.create`**.
 
@@ -207,7 +195,7 @@ python3 -m fastchat.serve.model_worker --model-path meta-llama/Llama-2-7b-chat-h
 python3 -m fastchat.serve.openai_api_server --host localhost --port 8000
 ```
 
-2. After observing the controller successfully receiving the heart beat signal from the worker, the server should be ready for use at http://localhost:8000/v1. 
+2. After observing the controller successfully receiving the heart beat signal from the worker, the server should be ready for use at http://localhost:8000/v1.
 
 3. Then we can try on running `role_playing_with_open_source_model.py`, where each agent in this example is initialized with specifying the `model_path` and `server_url`, similar to the example code below:
 
@@ -236,21 +224,21 @@ agent = ChatAgent(
   - example: [lmsys/vicuna-7b-v1.5](https://huggingface.co/lmsys/vicuna-7b-v1.5)
 
 ## Data (Hosted on Hugging Face)
-| Dataset | Chat format | Instruction format | Chat format (translated) |
-| -- | -- | -- | -- |
+| Dataset        | Chat format                                                                                         | Instruction format                                                                                               | Chat format (translated)                                                                   |
+|----------------|-----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 | **AI Society** | [Chat format](https://huggingface.co/datasets/camel-ai/ai_society/blob/main/ai_society_chat.tar.gz) | [Instruction format](https://huggingface.co/datasets/camel-ai/ai_society/blob/main/ai_society_instructions.json) | [Chat format (translated)](https://huggingface.co/datasets/camel-ai/ai_society_translated) |
-| **Code** | [Chat format](https://huggingface.co/datasets/camel-ai/code/blob/main/code_chat.tar.gz) | [Instruction format](https://huggingface.co/datasets/camel-ai/code/blob/main/code_instructions.json) | x |
-| **Math** | [Chat format](https://huggingface.co/datasets/camel-ai/math) | x | x|
-| **Physics** | [Chat format](https://huggingface.co/datasets/camel-ai/physics) | x | x |
-| **Chemistry** | [Chat format](https://huggingface.co/datasets/camel-ai/chemistry) | x | x |
-| **Biology** | [Chat format](https://huggingface.co/datasets/camel-ai/biology) | x | x |
+| **Code**       | [Chat format](https://huggingface.co/datasets/camel-ai/code/blob/main/code_chat.tar.gz)             | [Instruction format](https://huggingface.co/datasets/camel-ai/code/blob/main/code_instructions.json)             | x                                                                                          |
+| **Math**       | [Chat format](https://huggingface.co/datasets/camel-ai/math)                                        | x                                                                                                                | x                                                                                          |
+| **Physics**    | [Chat format](https://huggingface.co/datasets/camel-ai/physics)                                     | x                                                                                                                | x                                                                                          |
+| **Chemistry**  | [Chat format](https://huggingface.co/datasets/camel-ai/chemistry)                                   | x                                                                                                                | x                                                                                          |
+| **Biology**    | [Chat format](https://huggingface.co/datasets/camel-ai/biology)                                     | x                                                                                                                | x                                                                                          |
 
 ## Visualizations of Instructions and Tasks
 
-| Dataset | Instructions | Tasks |
-| -- | -- | -- |
-| **AI Society** | [Instructions](https://atlas.nomic.ai/map/3a559a06-87d0-4476-a879-962656242452/db961915-b254-48e8-8e5c-917f827b74c6) | [Tasks](https://atlas.nomic.ai/map/cb96f41b-a6fd-4fe4-ac40-08e101714483/ae06156c-a572-46e9-8345-ebe18586d02b) |
-| **Code** | [Instructions](https://atlas.nomic.ai/map/902d6ccb-0bbb-4294-83a8-1c7d2dae03c8/ace2e146-e49f-41db-a1f4-25a2c4be2457) | [Tasks](https://atlas.nomic.ai/map/efc38617-9180-490a-8630-43a05b35d22d/2576addf-a133-45d5-89a9-6b067b6652dd) |
+| Dataset          | Instructions                                                                                                         | Tasks                                                                                                         |
+|------------------|----------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| **AI Society**   | [Instructions](https://atlas.nomic.ai/map/3a559a06-87d0-4476-a879-962656242452/db961915-b254-48e8-8e5c-917f827b74c6) | [Tasks](https://atlas.nomic.ai/map/cb96f41b-a6fd-4fe4-ac40-08e101714483/ae06156c-a572-46e9-8345-ebe18586d02b) |
+| **Code**         | [Instructions](https://atlas.nomic.ai/map/902d6ccb-0bbb-4294-83a8-1c7d2dae03c8/ace2e146-e49f-41db-a1f4-25a2c4be2457) | [Tasks](https://atlas.nomic.ai/map/efc38617-9180-490a-8630-43a05b35d22d/2576addf-a133-45d5-89a9-6b067b6652dd) |
 | **Misalignment** | [Instructions](https://atlas.nomic.ai/map/5c491035-a26e-4a05-9593-82ffb2c3ab40/2bd98896-894e-4807-9ed8-a203ccb14d5e) | [Tasks](https://atlas.nomic.ai/map/abc357dd-9c04-4913-9541-63e259d7ac1f/825139a4-af66-427c-9d0e-f36b5492ab3f) |
 
 ## Implemented Research Ideas from Other Works
@@ -273,11 +261,9 @@ We implemented amazing research ideas from other works for you to build, compare
 ## Acknowledgement
 Special thanks to [Nomic AI](https://home.nomic.ai/) for giving us extended access to their data set exploration tool (Atlas).
 
-We would also like to thank Haya Hammoud for designing the logo of our project.
+We would also like to thank Haya Hammoud for designing the initial logo of our project.
 
 ## License
-
-The intended purpose and licensing of CAMEL is solely for research use.
 
 The source code is licensed under Apache 2.0.
 
@@ -288,3 +274,29 @@ We appreciate your interest in contributing to our open-source initiative. We pr
 
 ## Contact
 For more information please contact camel.ai.team@gmail.com.
+
+[python-image]: https://img.shields.io/badge/Python-3.9%2B-brightgreen.svg
+[python-url]: https://docs.python.org/3.9/
+[pytest-image]: https://github.com/camel-ai/camel/actions/workflows/pytest_package.yml/badge.svg
+[pytest-url]: https://github.com/camel-ai/camel/actions/workflows/pytest_package.yml
+[docs-image]: https://img.shields.io/badge/Documentation-grey.svg?logo=github
+[docs-url]: https://camel-ai.github.io/camel/index.html
+[star-image]: https://img.shields.io/github/stars/camel-ai/camel?label=stars&logo=github&color=brightgreen
+[star-url]: https://github.com/camel-ai/camel/stargazers
+[package-license-image]: https://img.shields.io/badge/License-Apache_2.0-blue.svg
+[package-license-url]: https://github.com/camel-ai/camel/blob/master/licenses/LICENSE
+[data-license-image]: https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg
+[data-license-url]: https://github.com/camel-ai/camel/blob/master/licenses/DATA_LICENSE
+
+[colab-url]: https://colab.research.google.com/drive/1AzP33O8rnMW__7ocWJhVBXjKziJXPtim?usp=sharing
+[colab-image]: https://colab.research.google.com/assets/colab-badge.svg
+[huggingface-url]: https://huggingface.co/camel-ai
+[huggingface-image]: https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CAMEL--AI-ffc107?color=ffc107&logoColor=white
+[slack-url]: https://join.slack.com/t/camel-ai/shared_invite/zt-2g7xc41gy-_7rcrNNAArIP6sLQqldkqQ
+[slack-image]: https://img.shields.io/badge/Slack-CAMEL--AI-blueviolet?logo=slack
+[discord-url]: https://discord.gg/CNcNpquyDc
+[discord-image]: https://img.shields.io/badge/Discord-CAMEL--AI-7289da?logo=discord&logoColor=white&color=7289da
+[wechat-url]: https://ghli.org/camel/wechat.png
+[wechat-image]: https://img.shields.io/badge/WeChat-CamelAIOrg-brightgreen?logo=wechat&logoColor=white
+[twitter-url]: https://twitter.com/CamelAIOrg
+[twitter-image]: https://img.shields.io/twitter/follow/CamelAIOrg?style=social&color=brightgreen&logo=twitter

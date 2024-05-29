@@ -12,9 +12,9 @@
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 import os
-from typing import List
+from typing import List, Literal
 
-from camel.functions import OpenAIFunction
+from camel.functions.openai_function import OpenAIFunction
 
 
 def get_openweathermap_api_key() -> str:
@@ -29,16 +29,23 @@ def get_openweathermap_api_key() -> str:
     # Get `OPENWEATHERMAP_API_KEY` here: https://openweathermap.org
     OPENWEATHERMAP_API_KEY = os.environ.get('OPENWEATHERMAP_API_KEY')
     if not OPENWEATHERMAP_API_KEY:
-        raise ValueError("`OPENWEATHERMAP_API_KEY` not found in environment "
-                         "variables. Get `OPENWEATHERMAP_API_KEY` here: "
-                         "`https://openweathermap.org`.")
+        raise ValueError(
+            "`OPENWEATHERMAP_API_KEY` not found in environment "
+            "variables. Get `OPENWEATHERMAP_API_KEY` here: "
+            "`https://openweathermap.org`."
+        )
     return OPENWEATHERMAP_API_KEY
 
 
-def get_weather_data(city: str, temp_units: str = 'kelvin',
-                     wind_units: str = 'meters_sec',
-                     visibility_units: str = 'meters',
-                     time_units: str = 'unix') -> str:
+def get_weather_data(
+    city: str,
+    temp_units: Literal['kelvin', 'celsius', 'fahrenheit'] = 'kelvin',
+    wind_units: Literal[
+        'meters_sec', 'miles_hour', 'knots', 'beaufort'
+    ] = 'meters_sec',
+    visibility_units: Literal['meters', 'miles'] = 'meters',
+    time_units: Literal['unix', 'iso', 'date'] = 'unix',
+) -> str:
     r"""Fetch and return a comprehensive weather report for a given city as a
     string. The report includes current weather conditions, temperature,
     wind details, visibility, and sunrise/sunset times, all formatted as
@@ -46,20 +53,20 @@ def get_weather_data(city: str, temp_units: str = 'kelvin',
     The function interacts with the OpenWeatherMap API to retrieve the data.
 
     Args:
-        city (string): The name of the city for which the weather information
+        city (str): The name of the city for which the weather information
             is desired. Format "City, CountryCode" (e.g., "Paris, FR"
             for Paris, France). If the country code is not provided,
             the API will search for the city in all countries, which
             may yield incorrect results if multiple cities with the
             same name exist.
-        temp_units (string): Units for temperature. Options: 'kelvin',
-            'celsius', 'fahrenheit'. (default: :obj:`kelvin`)
-        wind_units (string): Units for wind speed. Options: 'meters_sec',
-            'miles_hour', 'knots', 'beaufort'. (default: :obj:`meters_sec`)
-        visibility_units (string): Units for visibility distance. Options:
-            'meters', 'miles'. (default: :obj:`meters`)
-        time_units (string): Format for sunrise and sunset times. Options:
-            'unix', 'iso', 'date'. (default: :obj:`unix`)
+        temp_units (Literal['kelvin', 'celsius', 'fahrenheit']): Units for
+            temperature. (default: :obj:`kelvin`)
+        wind_units (Literal['meters_sec', 'miles_hour', 'knots', 'beaufort']):
+            Units for wind speed. (default: :obj:`meters_sec`)
+        visibility_units (Literal['meters', 'miles']): Units for visibility
+            distance. (default: :obj:`meters`)
+        time_units (Literal['unix', 'iso', 'date']): Format for sunrise and
+            sunset times. (default: :obj:`unix`)
 
     Returns:
         str: A string containing the fetched weather data, formatted in a
@@ -84,7 +91,8 @@ def get_weather_data(city: str, temp_units: str = 'kelvin',
     except ImportError:
         raise ImportError(
             "Please install `pyowm` first. You can install it by running "
-            "`pip install pyowm`.")
+            "`pip install pyowm`."
+        )
 
     OPENWEATHERMAP_API_KEY = get_openweathermap_api_key()
     owm = pyowm.OWM(OPENWEATHERMAP_API_KEY)
@@ -105,8 +113,11 @@ def get_weather_data(city: str, temp_units: str = 'kelvin',
 
         # Visibility
         visibility_distance = observation.weather.visibility_distance
-        visibility = (str(visibility_distance) if visibility_units == 'meters'
-                      else str(observation.weather.visibility(unit='miles')))
+        visibility = (
+            str(visibility_distance)
+            if visibility_units == 'meters'
+            else str(observation.weather.visibility(unit='miles'))
+        )
 
         # Sunrise and Sunset
         sunrise_time = str(weather.sunrise_time(timeformat=time_units))
@@ -120,14 +131,16 @@ def get_weather_data(city: str, temp_units: str = 'kelvin',
             f"Min temp: {temperature['temp_min']}°{temp_units.title()}. "
             f"Wind: {wind_speed} {wind_units} at {wind_deg} degrees. "
             f"Visibility: {visibility} {visibility_units}. "
-            f"Sunrise at {sunrise_time}, Sunset at {sunset_time}.")
+            f"Sunrise at {sunrise_time}, Sunset at {sunset_time}."
+        )
 
         return weather_report
 
     except Exception as e:
         error_message = (
             f"An error occurred while fetching weather data for {city}: "
-            f"{str(e)}.")
+            f"{e!s}."
+        )
         return error_message
 
 

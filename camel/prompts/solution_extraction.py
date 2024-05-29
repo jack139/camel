@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any
 
-from camel.prompts import TextPrompt, TextPromptDict
+from camel.prompts.base import TextPrompt, TextPromptDict
 from camel.types import RoleType
 
 
@@ -27,6 +27,7 @@ class SolutionExtractionPromptTemplateDict(TextPromptDict):
             that outlines the rules of the conversation and provides
             instructions for completing tasks.
     """
+
     ASSISTANT_PROMPT = TextPrompt(
         """你是一位经验丰富的提取解决方案的智能体。
 你的任务是通过查看用户和具有特定专业知识的助理之间的对话来提取全部且完整的解决方案。
@@ -35,10 +36,13 @@ class SolutionExtractionPromptTemplateDict(TextPromptDict):
 使用现在时，就好像你是提出解决方案的人一样。
 你不应错过任何必要的细节或示例。
 保留整个对话过程中提供的所有解释和代码。
-请记住，你的任务不是总结，而是提取完整的解决方案。""")
+请记住，你的任务不是总结，而是提取完整的解决方案。"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.update({
-            RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
-        })
+        self.update(
+            {
+                RoleType.ASSISTANT: self.ASSISTANT_PROMPT,
+            }
+        )

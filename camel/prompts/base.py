@@ -12,20 +12,11 @@
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 import inspect
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    TypeVar,
-    Union,
-)
+from typing import Any, Callable, Dict, Optional, Set, TypeVar, Union
 
+from camel.interpreters import BaseInterpreter, SubprocessInterpreter
 from camel.types import RoleType
-from camel.utils import PythonInterpreter
+from camel.utils import get_system_information
 
 T = TypeVar('T')
 
@@ -63,8 +54,11 @@ def return_prompt_wrapper(
             return cls(result)
         elif isinstance(result, tuple):
             new_result = tuple(
-                cls(item) if isinstance(item, str)
-                and not isinstance(item, cls) else item for item in result)
+                cls(item)
+                if isinstance(item, str) and not isinstance(item, cls)
+                else item
+                for item in result
+            )
             return new_result
         return result
 
@@ -107,9 +101,9 @@ class TextPrompt(str):
 
     @property
     def key_words(self) -> Set[str]:
-        r"""Returns a set of strings representing the keywords in the prompt.
-        """
+        r"""Returns a set of strings representing the keywords in the prompt."""
         from camel.utils import get_prompt_template_key_words
+
         return get_prompt_template_key_words(self)
 
     def format(self, *args: Any, **kwargs: Any) -> 'TextPrompt':
@@ -172,41 +166,52 @@ class CodePrompt(TextPrompt):
         self._code_type = code_type
 
     def execute(
-        self, interpreter: Optional[PythonInterpreter] = None,
-        user_variable: Optional[Dict[str, Any]] = None
-    ) -> Tuple[Any, PythonInterpreter]:
-        r"""Executes the code string by a given python interpreter.
+        self,
+        interpreter: Optional[BaseInterpreter] = None,
+        **kwargs: Any,
+    ) -> str:
+        r"""Executes the code string using the provided interpreter.
+
+        This method runs a code string through either a specified interpreter
+        or a default one. It supports additional keyword arguments for
+        flexibility.
 
         Args:
-            interpreter (PythonInterpreter, optional): interpreter to be used
-                during code execution. (default: :obj:`None`)
-            user_variable (Optional[Dict[str, Any]]): variables that can be
-                used in the code, which applying fuzzy matching, such as images
-                or documents. (default: :obj:`None`)
+            interpreter (Optional[BaseInterpreter]): The interpreter instance
+                to use for execution. If `None`, a default interpreter is used.
+                (default: :obj:`None`)
+            **kwargs: Additional keyword arguments passed to the interpreter to
+                run the code.
 
         Returns:
-            Tuple[Any, PythonInterpreter]: A tuple containing the execution
-                result and the used interpreter. The execution result
-                represents the value of the last statement (excluding "import")
-                in the code. This value could potentially be the desired result
-                of the LLM-generated code.        
-    """
-        # NOTE: Only supports Python code for now.
-        if not interpreter:
-            action_space = {}
-            action_space.update({"print": print, "enumerate": enumerate})
-            interpreter = PythonInterpreter(action_space=action_space)
-        execution_res = interpreter.execute(self, fuzz_state=user_variable,
-                                            keep_state=True)
-        return execution_res, interpreter
+            str: The result of the code execution. If the execution fails, this
+                should include sufficient information to diagnose and correct
+                the issue.
+
+        Raises:
+            InterpreterError: If the code execution encounters errors that
+                could be resolved by modifying or regenerating the code.
+        """
+        if interpreter is None:
+            execution_res = SubprocessInterpreter().run(
+                self, self._code_type, **kwargs
+            )
+        else:
+            execution_res = interpreter.run(self, self._code_type, **kwargs)
+        return execution_res
 
 
 # flake8: noqa :E501
 class TextPromptDict(Dict[Any, TextPrompt]):
-    r"""A dictionary class that maps from key to :obj:`TextPrompt` object.
-    """
+    r"""A dictionary class that maps from key to :obj:`TextPrompt` object."""
+
     EMBODIMENT_PROMPT = TextPrompt(
-        """你是{role}的物理体现，你正在解决任务：{task}
+        "System information :"
+        + "\n".join(
+            f"{key}: {value}" for key, value in get_system_information().items()
+        )
+        + "\n"
+        + """你是{role}的物理体现，你正在解决任务：{task}
 你可以在现实世界中做事情，包括浏览互联网、阅读文档、绘制图像、创建视频、执行代码等等。
 你的工作是执行与真实世界交互所需的动作。
 你将从{role}接收想法，并且你需要执行想法中描述的操作。
@@ -222,7 +227,8 @@ class TextPromptDict(Dict[Any, TextPrompt]):
 你可以按任意顺序执行操作。
 首先，解释你将执行的操作及其原因，然后编写Python代码来实现你的操作。
 如果你决定执行操作，则必须编写Python代码来实现这些操作。
-如有必要，你可以打印中间结果。""")
+如有必要，你可以打印中间结果。"""
+    )
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
