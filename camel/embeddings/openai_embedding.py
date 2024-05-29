@@ -37,6 +37,7 @@ class OpenAIEmbedding(BaseEmbedding[str]):
     def __init__(
         self,
         model_type: EmbeddingModelType = EmbeddingModelType.QWEN_7B,
+        server_url: Optional[str] = None,
         api_key: Optional[str] = None,
     ) -> None:
         if not model_type.is_openai:
@@ -44,7 +45,14 @@ class OpenAIEmbedding(BaseEmbedding[str]):
         self.model_type = model_type
         self.output_dim = model_type.output_dim
         self._api_key = api_key or os.environ.get("OPENAI_API_KEY")
-        self.client = OpenAI(timeout=60, max_retries=3, api_key=self._api_key)
+        if server_url is None:
+            self.client = OpenAI(timeout=60, max_retries=3, api_key=self._api_key)
+        else:
+            self.client = OpenAI(
+                base_url=server_url,
+                timeout=60,
+                max_retries=3,
+            )
 
     @api_key_required
     def embed_list(

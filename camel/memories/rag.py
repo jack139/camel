@@ -25,7 +25,7 @@ from camel.memories import (
     MemoryRecord,
     VectorDBMemory,
 )
-from camel.memories.context_creators import BaseContextCreator
+from camel.memories import BaseContextCreator
 from camel.storages import BaseVectorStorage, VectorRecord
 from camel.types import OpenAIBackendRole
 
@@ -88,7 +88,7 @@ class RAGmemory(AgentMemory):
 
     def _formulate_context(self, question) -> str:
         query_embedding = self.embedding.embed(self._question_topic)
-        results = self.vector_storage.simple_query(query_embedding, 3)
+        results = self.vector_storage.get_payloads_by_vector(query_embedding, 3)
         content = [result["text"] for result in results]
         for c in content:
             print(Fore.BLUE + c + Fore.RESET)

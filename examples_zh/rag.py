@@ -23,8 +23,8 @@ from camel.embeddings import OpenAIEmbedding
 from camel.memories import ChatHistoryMemory, ScoreBasedContextCreator
 from camel.memories.rag import RAGmemory
 from camel.messages import BaseMessage
-from camel.storages import QdrantStorage, VectorDistance
-from camel.types import ModelType, RoleType, EmbeddingModelType
+from camel.storages import QdrantStorage
+from camel.types import ModelType, RoleType, EmbeddingModelType, VectorDistance
 from camel.utils import OpenSourceTokenCounter
 
 
@@ -58,7 +58,7 @@ def agent_rag(paths: List[str]) -> None:
     )
     memory = RAGmemory(
         context_creator,
-        ChatHistoryMemory(),
+        ChatHistoryMemory(context_creator),
         QdrantStorage(
             embedding.get_output_dim(),
             path="./ragdb",
@@ -69,7 +69,7 @@ def agent_rag(paths: List[str]) -> None:
         embedding=embedding,
         files=files,
     )
-    print(memory.vector_storage._check_collection("handbook"))
+    #print(memory.vector_storage._get_collection_info("handbook"))
     content = """您是一个有用的助手，可以根据给定的上下文回答用户的问题。
 您可以使用的唯一信息是给定的上下文。除了给定的内容之外，您不应提供任何其他信息。
 如果您认为给定的上下文不足以回答问题，您可以指示用户提供更多信息。
@@ -89,7 +89,6 @@ def agent_rag(paths: List[str]) -> None:
 
     agent = ChatAgent(
         system_message=system_message,
-        #model_type=model_type,
         memory=memory,
         **(agent_kwargs),
     )
