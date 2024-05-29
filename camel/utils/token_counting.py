@@ -20,7 +20,7 @@ from io import BytesIO
 from math import ceil
 from typing import TYPE_CHECKING, List, Optional
 
-from anthropic import Anthropic
+#from anthropic import Anthropic
 from PIL import Image
 
 from camel.types import ModelType, OpenAIImageDetailType, OpenAIImageType

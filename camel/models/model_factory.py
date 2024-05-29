@@ -13,7 +13,7 @@
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
 from typing import Any, Dict, Optional
 
-from camel.models.anthropic_model import AnthropicModel
+#from camel.models.anthropic_model import AnthropicModel
 from camel.models.base_model import BaseModelBackend
 from camel.models.open_source_model import OpenSourceModel
 from camel.models.openai_model import OpenAIModel

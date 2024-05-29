@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
-from .anthropic_config import ANTHROPIC_API_PARAMS, AnthropicConfig
+#from .anthropic_config import ANTHROPIC_API_PARAMS, AnthropicConfig
 from .base_config import BaseConfig
 from .openai_config import (
     OPENAI_API_PARAMS,
@@ -23,7 +23,7 @@ __all__ = [
     'BaseConfig',
     'ChatGPTConfig',
     'OPENAI_API_PARAMS',
-    'AnthropicConfig',
-    'ANTHROPIC_API_PARAMS',
+    #'AnthropicConfig',
+    #'ANTHROPIC_API_PARAMS',
     'OpenSourceConfig',
 ]

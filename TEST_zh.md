@@ -13,7 +13,7 @@ sudo pip3.9 install "fschat[model_worker,webui]"
 sudo pip3.9 install pydantic==1.10.13
 sudo pip3.9 install colorama tenacity
 sudo pip3.9 install transformers_stream_generator # for Qwen-7B-Chat
-sudo pip3.9 install openai==1.2.4 # for camel
+sudo pip3.9 install openai==1.30.3 # for camel
 sudo pip3.9 install qdrant-client==1.6.4 # vector DB
 sudo pip3.9 install "unstructured[unstructured_inference]"
 sudo pip3.9 install unstructured unstructured_inference pdf2image pdfminer.six pikepdf pypdf pillow_heif

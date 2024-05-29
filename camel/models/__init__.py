@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =========== Copyright 2023 @ CAMEL-AI.org. All Rights Reserved. ===========
-from .anthropic_model import AnthropicModel
+#from .anthropic_model import AnthropicModel
 from .base_model import BaseModelBackend
 from .model_factory import ModelFactory
 from .open_source_model import OpenSourceModel
@@ -22,7 +22,7 @@ from .stub_model import StubModel
 __all__ = [
     'BaseModelBackend',
     'OpenAIModel',
-    'AnthropicModel',
+    #'AnthropicModel',
     'StubModel',
     'OpenSourceModel',
     'ModelFactory',

@@ -51,7 +51,6 @@ class ChatHistoryBlock(MemoryBlock):
         self.storage = storage or InMemoryKeyValueStorage()
         self.keep_rate = keep_rate
 
-
     def retrieve(
         self,
         window_size: Optional[int] = None,
@@ -110,23 +109,3 @@ class ChatHistoryBlock(MemoryBlock):
     def clear(self) -> None:
         r"""Clears all chat messages from the memory."""
         self.storage.clear()
-
-
-class ChatHistoryAgentMemory(ChatHistoryMemory, AgentMemory):
-    r""""""
-
-    def __init__(
-        self,
-        context_creator: BaseContextCreator,
-        storage: Optional[BaseKeyValueStorage] = None,
-        window_size: Optional[int] = None,
-    ) -> None:
-        self._context_creator = context_creator
-        self.window_size = window_size
-        super().__init__(storage=storage)
-
-    def retrieve(self) -> List[ContextRecord]:
-        return super().retrieve(self.window_size)
-
-    def get_context_creator(self) -> BaseContextCreator:
-        return self._context_creator
