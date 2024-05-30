@@ -62,14 +62,13 @@ def agent_rag(paths: List[str]) -> None:
         QdrantStorage(
             embedding.get_output_dim(),
             path="./ragdb",
-            create_collection=True,
-            collection="handbook",
+            collection_name="handbook",
             distance=VectorDistance.COSINE,
         ),
         embedding=embedding,
         files=files,
     )
-    #print(memory.vector_storage._get_collection_info("handbook"))
+    print(memory.vector_storage._get_collection_info("handbook"))
     content = """您是一个有用的助手，可以根据给定的上下文回答用户的问题。
 您可以使用的唯一信息是给定的上下文。除了给定的内容之外，您不应提供任何其他信息。
 如果您认为给定的上下文不足以回答问题，您可以指示用户提供更多信息。
