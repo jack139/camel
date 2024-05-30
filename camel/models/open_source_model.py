@@ -121,8 +121,8 @@ class OpenSourceModel(BaseModelBackend):
             **self.model_config_dict,
         )
         # for debug only
-        #print(f"--> {messages}\n") 
-        #print(f"<-- {response}\n")
+        print(f"--> {messages}\n") 
+        print(f"<-- {response}\n")
         return response
 
     def check_model_config(self):

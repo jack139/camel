@@ -98,6 +98,7 @@ class ChatGPTConfig(BaseConfig):
     frequency_penalty: float = 0.0
     logit_bias: dict = field(default_factory=dict)
     user: str = ""
+    ''' ####  not supprted by llama.cpp
     tools: Optional[list[OpenAIFunction]] = None
     tool_choice: Optional[dict[str, str] | str] = None
 
@@ -108,7 +109,7 @@ class ChatGPTConfig(BaseConfig):
                 'tools',
                 [tool.get_openai_tool_schema() for tool in self.tools],
             )
-
+    '''
 
 OPENAI_API_PARAMS = {param for param in asdict(ChatGPTConfig()).keys()}
 
