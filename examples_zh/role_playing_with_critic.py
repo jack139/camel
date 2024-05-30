@@ -30,7 +30,7 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
                 model_path=model_path,
                 server_url=server_url,
                 api_params=ChatGPTConfig(temperature=0.8, frequency_penalty=0.3, 
-                    n=3 if role in ["assistant", "user"] else 1
+                    n=3 if role in ["assistant", "user"] else 1 # llama.cpp 只支持 n=1
                 ), 
             ),
         )
@@ -66,7 +66,7 @@ def main(model_type=None, chat_turn_limit=50, model_path=" ",
     print(Fore.RED + f"Final task prompt:\n{role_play_session.task_prompt}\n")
 
     n = 0
-    input_assistant_msg, _ = role_play_session.init_chat()
+    input_assistant_msg = role_play_session.init_chat()
     while n < chat_turn_limit:
         n += 1
         assistant_response, user_response = role_play_session.step(
